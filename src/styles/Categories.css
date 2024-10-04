@@ -1,0 +1,108 @@
+/* .categories {
+    display: flex;
+    justify-content: center;
+    overflow-x: auto;
+    padding: 10px;
+}
+
+.category-btn {
+    padding: 10px 20px;
+    margin: 0 10px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.category-btn:hover {
+    background-color: #ff5a5f;
+    color: white;
+}
+
+.categories::-webkit-scrollbar {
+    display: none;
+}
+
+.categories {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+} */
+/* Base styles for categories */
+.categories {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    flex-wrap: nowrap;
+    gap: 20px;
+    overflow-x: scroll;
+    scrollbar-width: none;
+    /* For Firefox */
+    -ms-overflow-style: none;
+    /* For Internet Explorer and Edge */
+}
+
+.categories::-webkit-scrollbar {
+    display: none;
+    /* For Chrome, Safari, and Opera */
+}
+
+/* Category buttons */
+.category-list {
+    display: flex;
+    gap: 20px;
+}
+
+.category-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: filter 0.3s ease, transform 0.3s ease;
+    filter: blur(5px);
+    /* Initial blur effect */
+}
+
+/* Remove blur when the category is fully visible */
+.category-visible {
+    filter: blur(0px);
+    transform: scale(1.05);
+}
+
+.category-button:hover {
+    transform: scale(1.05);
+    /* Optional: slight zoom effect on hover */
+}
+
+.category-button::after {
+    content: '';
+    /* Required to create the pseudo-element */
+    display: block;
+    /* Block-level for line/underline effect */
+    width: 100%;
+    /* Adjust to fill the width of the button */
+    height: 2px;
+    /* Height of the line/underline */
+    background: currentColor;
+    /* Use the text color or specify a color */
+    position: absolute;
+    /* Position it below the text */
+    bottom: -5px;
+    /* Adjust to position it below the category */
+    left: 0;
+    /* Align to the left */
+    right: 0;
+    /* Align to the right */
+    opacity: 0;
+    /* Start with it hidden */
+    transition: opacity 0.3s;
+    /* Smooth transition for appearing */
+}
+
+.category-button:hover::after {
+    opacity: 1;
+    /* Show the line on hover */
+}
