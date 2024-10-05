@@ -1,6 +1,4 @@
 // import { useState } from 'react';
-import { useEffect, useRef } from "react";
-import '../styles/Categories.css';
 
 // const categories = ['Beachfront', 'Cabins', 'Trending', 'Mountain', 'City', 'Luxury'];
 
@@ -21,6 +19,10 @@ import '../styles/Categories.css';
 //         </div>
 //     );
 // };
+import { useEffect, useRef } from "react";
+import '../styles/Categories.css';
+import PropTypes from "prop-types";
+
 const categories = [
     { name: 'Icons', src: 'https://a0.muscache.com/im/pictures/mediaverse/category_icon/original/3e5243c8-4d15-4c6b-97e3-7ba2bb7bb880.png', link: '/icons', width: 24, height: 24 },
     { name: 'Top cities', src: 'https://a0.muscache.com/pictures/ed8b9e47-609b-44c2-9768-33e6a22eccb2.jpg', link: '/top-cities', width: 24, height: 24 },
@@ -61,20 +63,29 @@ const categories = [
     { name: 'Beachfront', src: 'https://a0.muscache.com/pictures/bcd1adc0-5cee-4d7a-85ec-f6730b0f8d0c.jpg', link: '/beach-front', width: 24, height: 24 },
     { name: 'Beach', src: 'https://a0.muscache.com/pictures/10ce1091-c854-40f3-a2fb-defc2995bcaf.jpg', link: '/beach', width: 24, height: 24 },
     { name: 'Campers', src: 'https://a0.muscache.com/pictures/31c1d523-cc46-45b3-957a-da76c30c85f9.jpg', link: '/campers', width: 24, height: 24 },
-    { name: 'Surfing', src: 'https://a0.muscache.com/pictures/957f8022-dfd7-426c-99fd-77ed792f6d7a.jpg', link: '/surfing', width: 24, height: 24 },
-    { name: 'Surfing', src: 'https://a0.muscache.com/pictures/957f8022-dfd7-426c-99fd-77ed792f6d7a.jpg', link: '/surfing', width: 24, height: 24 },
-    { name: 'Surfing', src: 'https://a0.muscache.com/pictures/957f8022-dfd7-426c-99fd-77ed792f6d7a.jpg', link: '/surfing', width: 24, height: 24 },
-    { name: 'Surfing', src: 'https://a0.muscache.com/pictures/957f8022-dfd7-426c-99fd-77ed792f6d7a.jpg', link: '/surfing', width: 24, height: 24 },
-    { name: 'Surfing', src: 'https://a0.muscache.com/pictures/957f8022-dfd7-426c-99fd-77ed792f6d7a.jpg', link: '/surfing', width: 24, height: 24 },
-    { name: 'Surfing', src: 'https://a0.muscache.com/pictures/957f8022-dfd7-426c-99fd-77ed792f6d7a.jpg', link: '/surfing', width: 24, height: 24 },
-    { name: 'Surfing', src: 'https://a0.muscache.com/pictures/957f8022-dfd7-426c-99fd-77ed792f6d7a.jpg', link: '/surfing', width: 24, height: 24 },
-    { name: 'Surfing', src: 'https://a0.muscache.com/pictures/957f8022-dfd7-426c-99fd-77ed792f6d7a.jpg', link: '/surfing', width: 24, height: 24 }
+    { name: 'Golfing', src: 'https://a0.muscache.com/pictures/6b639c8d-cf9b-41fb-91a0-91af9d7677cc.jpg', link: '/golfing', width: 24, height: 24 },
+    { name: 'Skiing', src: 'https://a0.muscache.com/pictures/c8bba3ed-34c0-464a-8e6e-27574d20e4d2.jpg', link: '/skiing', width: 24, height: 24 },
+    { name: 'Hanoks', src: 'https://a0.muscache.com/pictures/51f5cf64-5821-400c-8033-8a10c7787d69.jpg', link: '/hanoks', width: 24, height: 24 },
+    { name: 'Vineyards', src: 'https://a0.muscache.com/pictures/60ff02ae-d4a2-4d18-a120-0dd274a95925.jpg', link: '/vine-yards', width: 24, height: 24 },
+    { name: 'Chef\'s Kitchen', src: 'https://a0.muscache.com/pictures/ddd13204-a5ae-4532-898c-2e595b1bb15f.jpg', link: '/chef-kitchen', width: 24, height: 24 },
+    { name: 'Windmills', src: 'https://a0.muscache.com/pictures/5cdb8451-8f75-4c5f-a17d-33ee228e3db8.jpg', link: '/wind-mills', width: 24, height: 24 },
+    { name: 'Shepherd\'s huts', src: 'https://a0.muscache.com/pictures/747b326c-cb8f-41cf-a7f9-809ab646e10c.jpg', link: '/shepherd-hut', width: 24, height: 24 },
+    { name: 'Ryokans', src: 'https://a0.muscache.com/pictures/827c5623-d182-474a-823c-db3894490896.jpg', link: '/', width: 24, height: 24 }
 ];
 
 
-const Categories = () => {
+const Categories = ({ activeCategory, setActiveCategory }) => {
+    // const [activeCategory, setActiveCategory] = useState("Icons"); // State to track the active category
     const categoriesRef = useRef([]); // Create a ref for each category button
 
+    const handleCategoryClick = (categoryName) => {
+        setActiveCategory(categoryName); // Set the active category when clicked
+    };
+    useEffect(() => {
+        if (activeCategory) {
+            console.log("Active category:", activeCategory);
+        }
+    }, [activeCategory]);
     useEffect(() => {
         // IntersectionObserver to detect if a category is in view
         const observer = new IntersectionObserver(
@@ -106,25 +117,46 @@ const Categories = () => {
         };
     }, []);
 
+    // return (
+    //     <div className="categories">
+    //         <div className="category-list">
+    //             {categories.map((category, index) => (
+    //                 <div
+    //                     key={index}
+    //                     className="category-button"
+    //                     ref={(el) => (categoriesRef.current[index] = el)} // Attach ref to each category
+    //                 >
+    //                     <img src={category.src} alt={category.name} width={category.width} height={category.height} />
+    //                     <p>{category.name}</p>
+    //                 </div>
+    //             ))}
+    //         </div>
+    //     </div>
+    // );
     return (
         <div className="categories">
             <div className="category-list">
                 {categories.map((category, index) => (
                     <div
-                        key={index}
-                        className="category-button"
-                        ref={(el) => (categoriesRef.current[index] = el)} // Attach ref to each category
+                        key={category.name}
+                        className={`category-button ${activeCategory === category.name ? 'active' : ''}`} // Apply 'active' class if this is the active category
+                        onClick={(e) => { e.preventDefault(); handleCategoryClick(category.name); }} // Set active category on click
+                        ref={(el) => (categoriesRef.current[index] = el)} // Assign the element to the ref
                     >
                         <img src={category.src} alt={category.name} width={category.width} height={category.height} />
-                        <p>{category.name}</p>
+                        <span>{category.name}</span>
                     </div>
                 ))}
             </div>
         </div>
     );
+
 };
 
-
+Categories.propTypes = {
+    activeCategory: PropTypes.string.isRequired,
+    setActiveCategory: PropTypes.func.isRequired,
+};
 
 
 export default Categories;

@@ -25,6 +25,12 @@
 .search-bar button:hover {
     background-color: #ff787d;
 } */
+.search-bar-container {
+    width: 100%;
+    /* Full width for the border */
+    border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+    /* Apply border only at the bottom */
+}
 
 .search-bar {
     display: flex;
@@ -59,7 +65,7 @@
 /* Dull effect when focused */
 .search-bar input:focus {
     border-radius: 20px;
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1), 0 0 -8px rgba(0, 0, 0, 0.1);
     /* Highlight the focused input */
 }
 

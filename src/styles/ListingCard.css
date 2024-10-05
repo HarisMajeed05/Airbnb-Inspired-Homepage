@@ -32,41 +32,68 @@
     font-weight: bold;
     color: #333;
 } */
+
+/* Wrapper for listing cards */
+.listing-section {
+    display: flex;
+    /* Use flexbox */
+    flex-wrap: wrap;
+    /* Allow cards to wrap to the next line */
+    /* Distribute space evenly */
+    margin: 20px;
+    /* Optional: Add margin around the listing section */
+}
+
+/* Individual card styles */
 .listing-card {
     width: 300px;
-    border-radius: 12px;
+    /* Rounded corners */
     overflow: hidden;
-    border: 1px solid #ddd;
+    /* Hide overflow */
     margin: 20px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .listing-card img {
     width: 100%;
+    /* Full width of the card */
     height: 200px;
+    /* Fixed height for images */
     object-fit: cover;
+    /* Maintain aspect ratio */
     border-bottom: 1px solid #ddd;
+    /* Bottom border for the image */
 }
 
 .listing-info {
     padding: 12px;
+    /* Padding inside the card */
 }
 
 .listing-info h3 {
     font-size: 18px;
+    /* Title font size */
     margin-bottom: 6px;
+    /* Bottom margin for the title */
     font-weight: 600;
+    /* Bold font weight */
 }
 
 .listing-info p {
     font-size: 14px;
+    /* Text font size */
     color: #666;
+    /* Text color */
     margin: 4px 0;
+    /* Margin for text paragraphs */
 }
 
 .listing-info .price {
     font-size: 16px;
+    /* Price font size */
     font-weight: 600;
+    /* Bold font weight for price */
     margin-top: 6px;
+    /* Margin on top of price */
     color: #333;
+    /* Price text color */
 }

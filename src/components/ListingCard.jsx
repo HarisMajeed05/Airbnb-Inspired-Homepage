@@ -1,5 +1,4 @@
-import PropTypes from 'prop-types';
-import '../styles/ListingCard.css';
+
 
 // const ListingCard = ({ image, title, type, guests, bedrooms, bathrooms, price, rating }) => {
 //     return (
@@ -27,6 +26,9 @@ import '../styles/ListingCard.css';
 //     rating: PropTypes.number.isRequired,
 // };
 
+import PropTypes from 'prop-types'; // Import PropTypes
+import '../styles/ListingCard.css';
+
 const ListingCard = ({ image, title, type, guests, bedrooms, bathrooms, price, rating }) => {
     return (
         <div className="listing-card">
@@ -35,12 +37,11 @@ const ListingCard = ({ image, title, type, guests, bedrooms, bathrooms, price, r
                 <h3>{title}</h3>
                 <p>{type} • {guests} guests • {bedrooms} bedrooms • {bathrooms} bathrooms</p>
                 <p className="price">${price} per night</p>
-                <p>Rating: {rating}</p>
+                {rating && <p>Rating: {rating}</p>} {/* Conditionally render rating if available */}
             </div>
         </div>
     );
 };
-
 
 ListingCard.propTypes = {
     image: PropTypes.string.isRequired,
@@ -52,4 +53,5 @@ ListingCard.propTypes = {
     price: PropTypes.number.isRequired,
     rating: PropTypes.number.isRequired,
 };
+
 export default ListingCard;

@@ -1,4 +1,3 @@
-import { useState } from 'react'
 // import reactLogo from './assets/react.svg'
 // import viteLogo from '/vite.svg'
 // import './App.css'
@@ -100,6 +99,8 @@ import { useState } from 'react'
 //     </div>
 //   );
 // }
+
+import { useState } from 'react';
 import Navbar from './components/Navbar';
 import SearchBar from './components/SearchBar';
 import Categories from './components/Categories';
@@ -107,39 +108,67 @@ import ListingCard from './components/ListingCard';
 import Footer from './components/Footer';
 import './App.css';
 
-const listings = [
-  {
-    image: '/path/to/image1.jpg',
-    title: "Stay in Prince's Purple Rain house",
-    type: 'Entire home',
-    guests: 4,
-    bedrooms: 2,
-    bathrooms: 2,
-    price: 100,
-    rating: 4.9
-  },
-  {
-    image: '/path/to/image2.jpg',
-    title: "Join the Living Room Session with Doja Cat",
-    type: 'Private room',
-    guests: 2,
-    bedrooms: 1,
-    bathrooms: 1,
-    price: 80,
-    rating: 4.8
-  }
-];
+
+
+const listings = {
+  Icons: [
+    {
+      image: 'https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTEzMTA4OTQ5ODA0MDcwMTE4Mw%3D%3D/original/a766e0e9-1e6f-4b88-b8d5-ce12375c6de8.png?im_w=720&im_q=highq',
+      title: "Stay in Prince's Purple Rain house",
+      type: 'Entire home',
+      guests: 4,
+      bedrooms: 2,
+      bathrooms: 2,
+      price: 100,
+      rating: 4.9
+    },
+    {
+      image: 'https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTEyNjMyMzc5Mzc2MTc3OTEzMg%3D%3D/original/8a39953f-f158-4cc2-a112-aa4079e0fca8.jpeg?im_w=720&im_q=highq',
+      title: "Stay in Prince's Purple Rain house",
+      type: 'Entire home',
+      guests: 4,
+      bedrooms: 2,
+      bathrooms: 2,
+      price: 100,
+      rating: 4.9
+    }
+  ],
+  Rooms: [
+    {
+      image: '/path/to/image1.jpg',
+      title: "Join the Living Room Session with Doja Cat",
+      type: 'Private room',
+      guests: 2,
+      bedrooms: 1,
+      bathrooms: 1,
+      price: 80,
+      rating: 4.8
+    }
+  ]
+};
 
 function App() {
+  const [activeCategory, setActiveCategory] = useState('Icons'); // Default to 'Icons'
+
+  // Get listings based on active category
+  const filteredListings = listings[activeCategory] || []; // This should give the correct listings based on active category
+
   return (
     <div className="App">
       <Navbar />
       <SearchBar />
-      <Categories />
+      <Categories
+        activeCategory={activeCategory}
+        setActiveCategory={setActiveCategory} // Pass the setActiveCategory function
+      /> {/* Pass down the function and active category */}
       <div className="listing-section">
-        {listings.map((listing, index) => (
-          <ListingCard key={index} {...listing} />
-        ))}
+        {filteredListings.length > 0 ? (
+          filteredListings.map((listing, index) => (
+            <ListingCard key={index} {...listing} /> // Spread the listing object as props
+          ))
+        ) : (
+          <p>No listings available for this category.</p> // Display message when no listings are found
+        )}
       </div>
       <Footer />
     </div>
@@ -147,4 +176,3 @@ function App() {
 }
 
 export default App;
-
