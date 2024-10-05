@@ -1,39 +1,3 @@
-/* 
-.listing-card {
-    margin: 10px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    max-width: 300px;
-}
-
-.listing-card img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-}
-
-.listing-info {
-    padding: 15px;
-}
-
-.listing-info h3 {
-    margin: 0;
-    font-size: 1.25rem;
-}
-
-.listing-info p {
-    margin: 5px 0;
-    color: #666;
-}
-
-.listing-info p:last-of-type {
-    font-weight: bold;
-    color: #333;
-} */
-
-/* Wrapper for listing cards */
 .listing-section {
     display: flex;
     /* Use flexbox */
@@ -46,17 +10,16 @@
 
 /* Individual card styles */
 .listing-card {
-    width: 300px;
-    /* Rounded corners */
+    margin: 10px;
     overflow: hidden;
-    /* Hide overflow */
-    margin: 20px;
+    max-width: 300px;
 }
 
 .listing-card img {
-    width: 100%;
+    width: 80%;
     /* Full width of the card */
-    height: 200px;
+    height: 160px;
+    border-radius: 8px;
     /* Fixed height for images */
     object-fit: cover;
     /* Maintain aspect ratio */
@@ -65,7 +28,12 @@
 }
 
 .listing-info {
-    padding: 12px;
+    position: relative;
+    padding: 0px 12px;
+    top: -2%;
+    width: 70%;
+    margin: auto;
+    text-align: left;
     /* Padding inside the card */
 }
 
