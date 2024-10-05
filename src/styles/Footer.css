@@ -1,4 +1,4 @@
-/* footer {
+footer {
     background-color: #f7f7f7;
     padding: 20px;
     text-align: center;
@@ -39,8 +39,9 @@
 footer p {
     font-size: 0.875rem;
     color: #666;
-} */
+}
 
+/* 
 .footer {
     padding: 20px;
     background-color: white;
@@ -60,4 +61,4 @@ footer p {
 .footer-icons {
     display: flex;
     gap: 15px;
-}
+} */

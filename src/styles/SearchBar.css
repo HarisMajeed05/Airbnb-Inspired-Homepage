@@ -31,21 +31,67 @@
     align-items: center;
     justify-content: space-between;
     background-color: white;
+
     padding: 10px;
     border-radius: 40px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1), 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 50%;
-    margin: auto;
+    margin: 10px auto;
 }
 
 .search-bar input {
     padding: 12px;
     border: none;
-    border-radius: 20px;
-    background-color: #f7f7f7;
     width: 30%;
     font-size: 16px;
-    margin-right: 10px;
+    margin-right: 0;
+    transition: box-shadow 0.3s;
+    /* Smooth transition for box shadow */
+}
+
+/* Hover effect */
+.search-bar input:hover {
+    border-radius: 20px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    /* Box shadow on hover */
+}
+
+/* Dull effect when focused */
+.search-bar input:focus {
+    border-radius: 20px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    /* Highlight the focused input */
+}
+
+/* Dull other inputs when one is focused */
+.search-bar input:focus~input {
+    opacity: 0.1;
+    /* Make other inputs dull */
+}
+
+/* Restore opacity when focus is lost */
+.search-bar input:not(:focus) {
+    opacity: 1;
+    /* Reset opacity */
+}
+
+
+.search-bar input:first-child {
+    border-left: none;
+    border-right: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+/* Remove the right border for the last input */
+.search-bar input:last-child {
+    border-right: none;
+    border-left: none;
+    /* Left border remains */
+}
+
+/* Add right border for all except the last input */
+.search-bar input:not(:nth-last-child(2)) {
+    border-right: 2px solid rgba(0, 0, 0, 0.1);
+    /* Add right border */
 }
 
 .search-button {
@@ -56,4 +102,15 @@
     border-radius: 50%;
     box-shadow: 0 4px 12px rgba(255, 56, 92, 0.4);
     cursor: pointer;
+    margin-left: 10px;
+    transition: box-shadow 0.3s, transform 0.3s;
+    /* Smooth transition for box shadow and scale */
+}
+
+/* Hover effect for search button */
+.search-button:hover {
+    box-shadow: 0 12px 24px rgba(255, 56, 92, 0.4), 0 16px 32px rgba(255, 120, 125, 0.6);
+    /* Larger shadow on hover */
+    transform: translateY(-1px);
+    /* Slight lift effect */
 }

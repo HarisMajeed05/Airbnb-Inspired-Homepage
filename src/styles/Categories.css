@@ -29,24 +29,22 @@
 } */
 /* Base styles for categories */
 .categories {
+    border-top: 2px solid rgba(0, 0, 0, 0.1);
     display: flex;
     justify-content: space-between;
-    padding: 10px;
+    padding: 10px 10px;
     flex-wrap: nowrap;
     gap: 20px;
     overflow-x: scroll;
     scrollbar-width: none;
-    /* For Firefox */
     -ms-overflow-style: none;
-    /* For Internet Explorer and Edge */
+    font-size: 8px;
 }
 
 .categories::-webkit-scrollbar {
     display: none;
-    /* For Chrome, Safari, and Opera */
 }
 
-/* Category buttons */
 .category-list {
     display: flex;
     gap: 20px;
@@ -58,7 +56,7 @@
     align-items: center;
     padding: 10px;
     background-color: white;
-    border: 1px solid #ddd;
+    /* border: 1px solid #ddd; */
     border-radius: 10px;
     cursor: pointer;
     transition: filter 0.3s ease, transform 0.3s ease;
@@ -86,7 +84,7 @@
     /* Adjust to fill the width of the button */
     height: 2px;
     /* Height of the line/underline */
-    background: currentColor;
+    background: rgb(93, 84, 84);
     /* Use the text color or specify a color */
     position: absolute;
     /* Position it below the text */
