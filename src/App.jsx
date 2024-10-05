@@ -111,18 +111,20 @@ import './App.css';
 
 
 const listings = {
-  Icons: [
+  "Icons": [
     {
       image: 'https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTEzMTA4OTQ5ODA0MDcwMTE4Mw%3D%3D/original/a766e0e9-1e6f-4b88-b8d5-ce12375c6de8.png?im_w=720&im_q=highq',
       title: "Stay in Prince's Purple Rain house",
       type: 'Entire home',
+      distance: "",
+      duration: "",
       hostedby: "Hosted by Wendy and Lisa",
       guests: 4,
       bedrooms: 2,
       bathrooms: 2,
       price: "$7",
       status: "per guest",
-      rating: 4.9
+      rating: ""
     },
     {
       image: 'https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTEyNjMyMzc5Mzc2MTc3OTEzMg%3D%3D/original/8a39953f-f158-4cc2-a112-aa4079e0fca8.jpeg?im_w=720&im_q=highq',
@@ -134,7 +136,7 @@ const listings = {
       bathrooms: 2,
       price: "$77",
       status: " per guest",
-      rating: 4.9
+      rating: ""
     }
     ,
     {
@@ -147,141 +149,131 @@ const listings = {
       bathrooms: 2,
       price: "",
       status: "Sold out",
-      rating: 4.9
-    }
-    ,
-    {
-      image: 'https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTEyNjMyMzc5Mzc2MTc3OTEzMg%3D%3D/original/8a39953f-f158-4cc2-a112-aa4079e0fca8.jpeg?im_w=720&im_q=highq',
-      title: "Join the Living Room Session with Doja Cat",
-      hostedby: "Hosted by Doja Cat",
-      type: 'Entire home',
-      guests: 4,
-      bedrooms: 2,
-      bathrooms: 2,
-      price: 77,
-      rating: 4.9
+      rating: ""
     },
     {
-      image: 'https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTEyNjMyMzc5Mzc2MTc3OTEzMg%3D%3D/original/8a39953f-f158-4cc2-a112-aa4079e0fca8.jpeg?im_w=720&im_q=highq',
-      title: "Join the Living Room Session with Doja Cat",
+      image: 'https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTE4NzE3Nzg1NDA2MjM5NzY2NQ%3D%3D/original/6989d581-3f67-4cd9-8cb6-5f5c226aedc6.png?im_w=1440&im_q=highq',
+      title: "Playdate at Polly Pocket's Compact",
       hostedby: "Hosted by Doja Cat",
       type: 'Entire home',
       guests: 4,
       bedrooms: 2,
       bathrooms: 2,
-      price: 77,
-      rating: 4.9
+      price: "",
+      status: "Sold out",
+      rating: ""
     },
     {
-      image: 'https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTEyNjMyMzc5Mzc2MTc3OTEzMg%3D%3D/original/8a39953f-f158-4cc2-a112-aa4079e0fca8.jpeg?im_w=720&im_q=highq',
-      title: "Join the Living Room Session with Doja Cat",
-      hostedby: "Hosted by Doja Cat",
+      image: 'https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTEzMTA4NzY0ODgzNzUzNjQzNw%3D%3D/original/1077cfcd-29d5-42b7-adab-19e0b620e492.jpeg?im_w=1440&im_q=highq',
+      title: "Go VIP with Kevin Hart",
+      hostedby: "Hosted by Kevin Hart",
       type: 'Entire home',
+      distance: "",
+      duration: "",
       guests: 4,
       bedrooms: 2,
       bathrooms: 2,
-      price: 77,
-      rating: 4.9
+      price: "",
+      status: "Sold out",
+      rating: ""
     },
     {
-      image: 'https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTEyNjMyMzc5Mzc2MTc3OTEzMg%3D%3D/original/8a39953f-f158-4cc2-a112-aa4079e0fca8.jpeg?im_w=720&im_q=highq',
-      title: "Join the Living Room Session with Doja Cat",
-      hostedby: "Hosted by Doja Cat",
+      image: 'https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTEyNjIzMTk3NDU3MjE4Nzg2NA%3D%3D/original/f4cbe542-3ce0-4c6f-a8f1-d2120c1b2420.jpeg?im_w=1440&im_q=highq',
+      title: "Train at the X-Mansion",
+      hostedby: "Hosted by Jubilee",
       type: 'Entire home',
       guests: 4,
       bedrooms: 2,
       bathrooms: 2,
-      price: 77,
-      rating: 4.9
-    },
-    {
-      image: 'https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTEyNjMyMzc5Mzc2MTc3OTEzMg%3D%3D/original/8a39953f-f158-4cc2-a112-aa4079e0fca8.jpeg?im_w=720&im_q=highq',
-      title: "Join the Living Room Session with Doja Cat",
-      hostedby: "Hosted by Doja Cat",
-      type: 'Entire home',
-      guests: 4,
-      bedrooms: 2,
-      bathrooms: 2,
-      price: 77,
-      rating: 4.9
-    },
-    {
-      image: 'https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTEyNjMyMzc5Mzc2MTc3OTEzMg%3D%3D/original/8a39953f-f158-4cc2-a112-aa4079e0fca8.jpeg?im_w=720&im_q=highq',
-      title: "Join the Living Room Session with Doja Cat",
-      hostedby: "Hosted by Doja Cat",
-      type: 'Entire home',
-      guests: 4,
-      bedrooms: 2,
-      bathrooms: 2,
-      price: 77,
-      rating: 4.9
-    },
-    {
-      image: 'https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTEyNjMyMzc5Mzc2MTc3OTEzMg%3D%3D/original/8a39953f-f158-4cc2-a112-aa4079e0fca8.jpeg?im_w=720&im_q=highq',
-      title: "Join the Living Room Session with Doja Cat",
-      hostedby: "Hosted by Doja Cat",
-      type: 'Entire home',
-      guests: 4,
-      bedrooms: 2,
-      bathrooms: 2,
-      price: 77,
-      rating: 4.9
-    },
-    {
-      image: 'https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTEyNjMyMzc5Mzc2MTc3OTEzMg%3D%3D/original/8a39953f-f158-4cc2-a112-aa4079e0fca8.jpeg?im_w=720&im_q=highq',
-      title: "Join the Living Room Session with Doja Cat",
-      hostedby: "Hosted by Doja Cat",
-      type: 'Entire home',
-      guests: 4,
-      bedrooms: 2,
-      bathrooms: 2,
-      price: 77,
-      rating: 4.9
-    },
-    {
-      image: 'https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTEyNjMyMzc5Mzc2MTc3OTEzMg%3D%3D/original/8a39953f-f158-4cc2-a112-aa4079e0fca8.jpeg?im_w=720&im_q=highq',
-      title: "Join the Living Room Session with Doja Cat",
-      hostedby: "Hosted by Doja Cat",
-      type: 'Entire home',
-      guests: 4,
-      bedrooms: 2,
-      bathrooms: 2,
-      price: 77,
-      rating: 4.9
-    },
-    {
-      image: 'https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTEyNjMyMzc5Mzc2MTc3OTEzMg%3D%3D/original/8a39953f-f158-4cc2-a112-aa4079e0fca8.jpeg?im_w=720&im_q=highq',
-      title: "Join the Living Room Session with Doja Cat",
-      hostedby: "Hosted by Doja Cat",
-      type: 'Entire home',
-      guests: 4,
-      bedrooms: 2,
-      bathrooms: 2,
-      price: 77,
-      rating: 4.9
-    },
-    {
-      image: 'https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTEyNjMyMzc5Mzc2MTc3OTEzMg%3D%3D/original/8a39953f-f158-4cc2-a112-aa4079e0fca8.jpeg?im_w=720&im_q=highq',
-      title: "Join the Living Room Session with Doja Cat",
-      hostedby: "Hosted by Doja Cat",
-      type: 'Entire home',
-      guests: 4,
-      bedrooms: 2,
-      bathrooms: 2,
-      price: 77,
-      rating: 4.9
+      price: "",
+      status: "Sold out",
+      rating: ""
     }
   ],
-  Rooms: [
+  "Top cities": [
     {
-      image: '/path/to/image1.jpg',
-      title: "Join the Living Room Session with Doja Cat",
-      type: 'Private room',
-      guests: 2,
-      bedrooms: 1,
-      bathrooms: 1,
-      price: 80,
-      rating: 4.8
+      image: 'https://a0.muscache.com/im/pictures/miso/Hosting-631154213461762756/original/9e1dc69d-c64f-4052-8dad-6f089fa04b6e.jpeg?im_w=720',
+      title: "Paris, France",
+      hostedby: "",
+      distance: "5,930 kilometers away",
+      duration: "Oct 26-31",
+      type: '',
+      guests: 4,
+      bedrooms: 2,
+      bathrooms: 2,
+      price: "$2,531 night",
+      status: "",
+      rating: "⭐ 5.0"
+    },
+    {
+      image: 'https://a0.muscache.com/im/ml/photo_enhancement/pictures/77873d3d-6c2b-4b43-853d-925ba0192e5d.jpg?im_w=720',
+      title: "Rome, Italy",
+      hostedby: "",
+      distance: "5,288 kilometers away",
+      duration: "Dec 15-20",
+      type: '',
+      guests: 4,
+      bedrooms: 2,
+      bathrooms: 2,
+      price: "$229 night",
+      status: "",
+      rating: "⭐ 4.95"
+    },
+    {
+      image: 'https://a0.muscache.com/im/ml/photo_enhancement/pictures/23a60113-a16d-4cd6-bf5a-a2f352eb4f4e.jpg?im_w=720',
+      title: "Gaular, Norway",
+      hostedby: "",
+      distance: "5,580 kilometers away",
+      duration: "Oct 14-19",
+      type: '',
+      guests: 4,
+      bedrooms: 2,
+      bathrooms: 2,
+      price: "$324 night",
+      status: "",
+      rating: "⭐ 4.94"
+    },
+    {
+      image: 'https://a0.muscache.com/im/ml/photo_enhancement/pictures/77873d3d-6c2b-4b43-853d-925ba0192e5d.jpg?im_w=720',
+      title: "Rome, Italy",
+      hostedby: "",
+      distance: "5,288 kilometers away",
+      duration: "Dec 15-20",
+      type: '',
+      guests: 4,
+      bedrooms: 2,
+      bathrooms: 2,
+      price: "$229 night",
+      status: "",
+      rating: "⭐ 4.95"
+    },
+    {
+      image: 'https://a0.muscache.com/im/ml/photo_enhancement/pictures/77873d3d-6c2b-4b43-853d-925ba0192e5d.jpg?im_w=720',
+      title: "Rome, Italy",
+      hostedby: "",
+      distance: "5,288 kilometers away",
+      duration: "Dec 15-20",
+      type: '',
+      guests: 4,
+      bedrooms: 2,
+      bathrooms: 2,
+      price: "$229 night",
+      status: "",
+      rating: "⭐ 4.95"
+    },
+    {
+      image: 'https://a0.muscache.com/im/ml/photo_enhancement/pictures/77873d3d-6c2b-4b43-853d-925ba0192e5d.jpg?im_w=720',
+      title: "Rome, Italy",
+      hostedby: "",
+      distance: "5,288 kilometers away",
+      duration: "Dec 15-20",
+      type: '',
+      guests: 4,
+      bedrooms: 2,
+      bathrooms: 2,
+      price: "$229 night",
+      status: "",
+      rating: "⭐ 4.95"
     }
   ]
 };

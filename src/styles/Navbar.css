@@ -40,13 +40,13 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
+    padding: 10px 50px;
     background-color: white;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     position: sticky;
     top: 0;
     z-index: 10;
-    width: 100%;
+    width: auto;
 }
 
 /* Logo Styling */
@@ -93,20 +93,21 @@
 }
 
 .navbar-globe-icon {
-    display: block;
+    display: flex;
     height: 16px;
     width: 16px;
     position: relative;
-    top: 13px;
-    fill: currentColor;
-    border: 1px solid #ddd;
-    border-radius: 20px;
+    top: 10px;
+    border: 8px solid white;
+    border-radius: 50%;
     transition: all 0.3s ease-in-out;
 }
 
 .navbar-globe-icon:hover {
-    background-color: #bbb;
+    border-color: #f7f7f7;
 }
+
+
 
 .user {
     position: relative;
@@ -181,4 +182,38 @@
 
 .navbar-dropdown-menu li {
     color: currentColor;
+}
+
+/* Media Query for Mobile */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+        /* Align items to the left on mobile */
+        padding: 10px;
+    }
+
+    .navbar-links {
+        display: none;
+        /* Hide navbar links on mobile */
+    }
+
+    .navbar-user-menu {
+        flex-direction: row;
+        width: 100%;
+        justify-content: space-between;
+        /* Spread user menu items on mobile */
+    }
+
+    .user {
+        padding: 8px 10px;
+        font-size: 14px;
+        /* Reduce font size on mobile */
+        width: auto;
+    }
+
+    .navbar-hamburger-icon {
+        display: block;
+        /* Show hamburger menu on mobile */
+    }
 }

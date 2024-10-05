@@ -29,24 +29,30 @@
 import PropTypes from 'prop-types'; // Import PropTypes
 import '../styles/ListingCard.css';
 
-const ListingCard = ({ image, title, hostedby, price, status }) => {
+const ListingCard = ({ image, title, rating, distance, duration, hostedby, price, status }) => {
     return (
         <div className="listing-card">
             <img src={image} alt={title} />
             <div className="listing-info">
-                <h3>{title}</h3>
+                <div className="title-rating">
+                    <h3>{title}</h3>
+                    <p className="rating">{rating}</p>
+                </div>
+                <p>{distance}</p>
+                <p>{duration}</p>
                 <p className="hostedby">{hostedby}</p>
-                {/* <p>{type} • {guests} guests • {bedrooms} bedrooms • {bathrooms} bathrooms</p> */}
-                <p className="price">{price}{status}</p>
-                {/* {rating && <p>Rating: {rating}</p>}  */}
+                <p className="price">{price} {status}</p>
             </div>
         </div>
     );
 };
 
+
 ListingCard.propTypes = {
     image: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
+    distance: PropTypes.string.isRequired,
+    duration: PropTypes.string.isRequired,
     hostedby: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
     guests: PropTypes.number.isRequired,
