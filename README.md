@@ -25,7 +25,7 @@ The application uses React's `useState` and `useEffect` hooks for state manageme
 2. **Navigate into the project directory:**
 
    ```bash
-   cd airbnb-clone
+   cd Airbnb-Inspired-Homepage
    ```
 
 3. **Install dependencies:**
