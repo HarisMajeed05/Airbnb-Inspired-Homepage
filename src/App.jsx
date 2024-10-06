@@ -188,6 +188,30 @@ const listings = {
       price: "",
       status: "Sold out",
       rating: ""
+    },
+    {
+      image: 'https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTEzMTA4NjI3OTI1MjIxNDQyOA%3D%3D/original/bc989f2d-eca8-4bcf-a9b0-b70b8e685a64.jpeg?im_w=1440&im_q=highq',
+      title: "Live like Bollywood star Janvhi Kapoor",
+      hostedby: "Hosted by Janvhi Kapoor",
+      type: 'Entire home',
+      guests: 4,
+      bedrooms: 2,
+      bathrooms: 2,
+      price: "",
+      status: "Sold out",
+      rating: ""
+    },
+    {
+      image: 'https://a0.muscache.com/im/pictures/hosting/Hosting-U3RheVN1cHBseUxpc3Rpbmc6MTE2MjI1MjI0NDQ0MzYzMjM4Mg%3D%3D/original/ae3426d1-fba4-44d4-bed2-690426f25f7a.jpeg?im_w=960&im_q=highq',
+      title: "Open the Olympic Games at Musée d’Orsay",
+      hostedby: "Hosted by Mathieu Lehanneur",
+      type: 'Entire home',
+      guests: 4,
+      bedrooms: 2,
+      bathrooms: 2,
+      price: "",
+      status: "Sold out",
+      rating: ""
     }
   ],
   "Top cities": [

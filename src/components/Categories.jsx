@@ -144,7 +144,9 @@ const Categories = ({ activeCategory, setActiveCategory }) => {
                         ref={(el) => (categoriesRef.current[index] = el)} // Assign the element to the ref
                     >
                         <img src={category.src} alt={category.name} width={category.width} height={category.height} />
-                        <span>{category.name}</span>
+                        <span className="category-names">
+                            {category.name}
+                        </span>
                     </div>
                 ))}
             </div>

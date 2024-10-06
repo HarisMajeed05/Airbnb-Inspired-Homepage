@@ -52,6 +52,10 @@
     width: 80%;
 }
 
+.category-names {
+    margin-top: 10px;
+}
+
 .category-button {
     display: flex;
     flex-direction: column;
@@ -81,7 +85,7 @@
     height: 2px;
     background: rgb(93, 84, 84);
     position: absolute;
-    bottom: -5px;
+    bottom: 10px;
     left: 0;
     right: 0;
     opacity: 0;
@@ -95,19 +99,31 @@
     height: 2px;
     background: rgb(93, 84, 84);
     position: absolute;
-    bottom: -5px;
+    bottom: 10px;
     left: 0;
     right: 0;
     opacity: 0;
     transition: opacity 0.3s;
 }
 
+
 .category-button:hover::after {
     opacity: 1;
-    /* Show underline on hover */
 }
 
 .category-button.active::after {
     opacity: 1;
     /* Show underline on hover */
+}
+
+@media (max-width:768px) {
+    .categories {
+        width: 85%;
+    }
+}
+
+@media (max-width:600px) {
+    .categories {
+        width: 83%;
+    }
 }

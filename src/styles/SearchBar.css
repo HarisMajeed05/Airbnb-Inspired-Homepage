@@ -120,3 +120,19 @@
     transform: translateY(-1px);
     /* Slight lift effect */
 }
+
+@media (max-width: 768px) {
+    .search-bar {
+        width: 70%;
+        padding: 0px 15px;
+
+    }
+
+    .search-bar input {
+        font-size: 12px;
+    }
+
+    .search-button {
+        padding: 5px 5px;
+    }
+}
