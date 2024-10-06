@@ -63,8 +63,9 @@ const Navbar = () => {
                 </div>
             </div>
             <ul className="navbar-links">
-                <li>Stays</li>
+                <li>Home</li>
                 <li>Experiences</li>
+                <li>Online Experiences</li>
             </ul>
             <div className="navbar-user-menu">
                 <button className="airbnb_your_home">
