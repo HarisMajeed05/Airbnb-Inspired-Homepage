@@ -25,7 +25,7 @@ import PropTypes from "prop-types";
 
 const categories = [
     { name: 'Icons', src: 'https://a0.muscache.com/im/pictures/mediaverse/category_icon/original/3e5243c8-4d15-4c6b-97e3-7ba2bb7bb880.png', link: '/icons', width: 24, height: 24 },
-    { name: 'Top cities', src: 'https://a0.muscache.com/pictures/ed8b9e47-609b-44c2-9768-33e6a22eccb2.jpg', link: '/top-cities', width: 24, height: 24 },
+    { name: 'TopCities', src: 'https://a0.muscache.com/pictures/ed8b9e47-609b-44c2-9768-33e6a22eccb2.jpg', link: '/top-cities', width: 24, height: 24 },
     { name: 'Rooms', src: 'https://a0.muscache.com/pictures/7630c83f-96a8-4232-9a10-0398661e2e6f.jpg', link: '/rooms', width: 24, height: 24 },
     { name: 'Amazing views', src: 'https://a0.muscache.com/pictures/3b1eb541-46d9-4bef-abc4-c37d77e3c21b.jpg', link: '/amazing-views', width: 24, height: 24 },
     { name: 'Countryside', src: 'https://a0.muscache.com/pictures/6ad4bd95-f086-437d-97e3-14d12155ddfe.jpg', link: '/countryside', width: 24, height: 24 },

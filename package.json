@@ -1,8 +1,20 @@
 {
   "name": "-onedrive-desktop-semester-5-web-dev-project-airbnb-inspired-homepage",
-  "private": true,
   "version": "0.0.0",
+  "private": true,
+  "description": "This project is a React application that replicates the main features of the Airbnb homepage. The primary focus is on building a responsive and interactive user interface using React hooks, functional components, and modern styling techniques like CSS modules.",
+  "homepage": "https://github.com/HarisMajeed05/Airbnb-Inspired-Homepage#readme",
+  "bugs": {
+    "url": "https://github.com/HarisMajeed05/Airbnb-Inspired-Homepage/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HarisMajeed05/Airbnb-Inspired-Homepage.git"
+  },
+  "license": "ISC",
+  "author": "",
   "type": "module",
+  "main": "eslint.config.js",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -10,9 +22,20 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "axios": "^1.7.9",
+    "bcrypt": "^5.1.1",
+    "body-parser": "^1.20.3",
+    "cors": "^2.8.5",
+    "esbuild": "^0.24.2",
+    "express": "^4.21.2",
+    "express-session": "^1.18.1",
+    "jsonwebtoken": "^9.0.2",
+    "mongodb": "^6.10.0",
+    "mongoose": "^8.9.2",
     "prop-types": "^15.8.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-router-dom": "^7.1.0",
     "react-slick": "^0.30.2",
     "slick-carousel": "^1.8.1",
     "swiper": "^11.1.14"

@@ -1,29 +1,37 @@
 import '../styles/Navbar.css';
-// const Navbar = () => {
-//     return (
-//         <nav>
-//             <div className="logo">Airbnb</div>
-//             <ul className="nav-links">
-//                 <li>Home</li>
-//                 <li>Experiences</li>
-//                 <li>Online Experiences</li>
-//             </ul>
-//             <div className="user-menu">
-//                 <button>Login</button>
-//                 <button>Signup</button>
-//             </div>
-//         </nav>
-//     );
-// };
+import { useNavigate } from 'react-router-dom';
 import { useState, useEffect, useRef } from 'react';
+import axios from 'axios';
 
 const Navbar = () => {
 
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const dropdownRef = useRef(null); // Create a ref for the dropdown menu
+    const [serverStatus, setServerStatus] = useState(false);
+    const navigate = useNavigate(); // Initialize navigate
 
+
+    // Function to fetch server status
+    const checkServerStatus = () => {
+        axios.get('http://localhost:4000/checkStatus')
+            .then((response) => {
+                setServerStatus(response.data ? true : false); // Set server status based on response
+            })
+            .catch((error) => {
+                console.error('Error checking server status:', error);
+                setServerStatus(false); // Set server status to false if there's an error
+            });
+    };
+
+    // Toggle dropdown and check server status when dropdown is opened
     const toggleDropdown = () => {
-        setIsDropdownOpen(prevState => !prevState); // Toggle the dropdown state
+        setIsDropdownOpen((prevState) => {
+            const newState = !prevState;
+            if (newState) {
+                checkServerStatus(); // Check server status when opening dropdown
+            }
+            return newState;
+        });
     };
 
     // Close the dropdown if clicked outside
@@ -43,6 +51,9 @@ const Navbar = () => {
         };
     }, []);
 
+    const handleNavigate = (path) => {
+        navigate(path); // Navigate to the specified path
+    };
     return (
         <nav className="navbar">
             <div className="logo">
@@ -93,15 +104,24 @@ const Navbar = () => {
 
                     {isDropdownOpen && (
                         <div className="navbar-dropdown-menu" ref={dropdownRef}>
-                            <ul>
-                                <li>Sign up</li>
-                                <li>Login</li>
-                                <li>Gift card</li>
-                                <li>Airbnb your home</li>
-                                <li>Host an experience</li>
-                                <li>Help center</li>
-                            </ul>
-                        </div>
+                        <ul>
+                        {!serverStatus && (
+                            <>
+                                <li onClick={() => handleNavigate('/signup')}>Sign up</li>
+                                <li onClick={() => handleNavigate('/login')}>Login</li>
+                            </>
+                        )}
+                            <li>Gift card</li>
+                            <li>Airbnb your home</li>
+                            <li>Host an experience</li>
+                            <li>Help center</li>
+                            {serverStatus && (
+                            <>
+                               <li onClick={() => handleNavigate('/logout')}>Logout</li>
+                            </>
+                        )}
+                        </ul>
+                    </div>
                     )}
                 </div>
 
