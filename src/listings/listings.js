@@ -86,6 +86,31 @@ app.delete('/api/:category/:id', async (req, res) => {
     res.status(500).send(err);
   }
 });
+app.post('/api/add-listing/:category', async (req, res) => {
+  const { category } = req.params;
+  const newListing = req.body;
+
+  try {
+    // Get all collections in the database
+    const collections = await database.listCollections().toArray();
+    const collectionNames = collections.map(col => col.name);
+
+    // Check if the collection exists
+    if (!collectionNames.includes(category.toLowerCase())) {
+      return res.status(400).json({ error: `Collection ${category} does not exist` });
+    }
+
+    // Get the collection and insert the new listing
+    const collection = database.collection(category.toLowerCase());
+    await collection.insertOne(newListing);
+    console.log(`Inserted listing into ${category} collection`);
+
+    res.status(201).json({ message: 'Listing added successfully!' });
+  } catch (err) {
+    console.error('Error inserting data:', err);
+    res.status(500).json({ error: 'Failed to add listing' });
+  }
+});
 
 // Start the server
 const PORT = process.env.PORT || 5000;

@@ -12,6 +12,12 @@
     cursor: pointer;
 }
 
+/* Remove underline from text if any */
+.listing-card a {
+    text-decoration: none; /* Remove underline from any link */
+    
+}
+
 .listing-card img {
     width: 100%;
     height: 250px;
@@ -23,6 +29,8 @@
 .listing-info {
     padding: 12px;
     text-align: left;
+    /* Make sure there's no underline by default in listing info */
+    text-decoration: none;
 }
 
 .title-rating {
@@ -45,12 +53,14 @@
     font-size: 15px;
     margin-bottom: 6px;
     font-weight: 600;
+    text-decoration: none; /* Prevent any underline in headings */
 }
 
 .listing-info p {
     font-size: 14px;
     color: #666;
     margin: 4px 0;
+    text-decoration: none; /* Prevent underline in paragraphs */
 }
 
 .listing-info .price {
@@ -59,12 +69,62 @@
     margin-top: 6px;
     color: #333;
 }
+.delete-button {
+    background-color: #ff4d4d; /* Bright red for delete */
+    color: white; /* White text for contrast */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    padding: 10px 15px; /* Add some padding for better clickability */
+    font-size: 14px; /* Font size for readability */
+    font-weight: bold; /* Bold text to draw attention */
+    cursor: pointer; /* Pointer cursor for interactivity */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth hover effect */
+}
+
+.delete-button:hover {
+    background-color: #d93636; /* Darker red for hover effect */
+    transform: scale(1.05); /* Slight zoom effect on hover */
+}
+
+.delete-button:active {
+    background-color: #c12d2d; /* Even darker red for active state */
+    transform: scale(0.98); /* Slight shrink effect on click */
+}
+
+.add-listing-card {
+    display: flex;
+    flex-direction: column; /* Ensures content stacks properly */
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 250px;
+    border-radius: 20px;
+    background-color: #007bff; /* Primary blue color #ff0056; */
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Added hover animation */
+}
+
+.add-listing-card:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+    transform: scale(1.05); /* Slight zoom effect on hover */
+}
+
+.add-listing-card img {
+    width: 60px; /* Scales the icon properly */
+    height: 60px; /* Keeps proportions consistent */
+    margin-bottom: 10px; /* Adds spacing below the icon */
+    object-fit: contain; /* Ensures the image fits well */
+    border-bottom: none;
+    filter: invert(21%) sepia(100%) saturate(7296%) hue-rotate(330deg) brightness(99%) contrast(102%);
+}
 
 /* Rest of the styles remain unchanged */
 
 /* Media Queries */
-
-
 @media (max-width: 768px) {
     .listing-card img {
         height: 200px;

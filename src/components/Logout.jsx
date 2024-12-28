@@ -9,7 +9,7 @@ const Logout = () => {
         const logoutUser = async () => {
             try {
                 // Send logout request to the server
-                const response = await fetch("http://localhost:4000/logout", {
+                const response = await fetch("http://localhost:4000/api/auth/logout", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",

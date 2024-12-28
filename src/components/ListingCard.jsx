@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../styles/ListingCard.css';
 
 const ListingCard = ({ activeCategory }) => {
     const [listings, setListings] = useState([]);
     const [currentUserRole, setCurrentUserRole] = useState('user'); // default to 'user'
+    const [error, setError] = useState(null);
+    const navigate = useNavigate(); // Hook for navigation
 
     // Fetch the listing data based on the active category
     useEffect(() => {
@@ -16,6 +18,7 @@ const ListingCard = ({ activeCategory }) => {
             })
             .catch((error) => {
                 console.error('Error fetching listings:', error);
+                setError('Failed to fetch listings.');
             });
 
         // Fetch current user's role
@@ -46,6 +49,15 @@ const ListingCard = ({ activeCategory }) => {
                 console.error('Error deleting listing:', error);
             });
     };
+
+    // Redirect to the "Add Listing" form
+    const handleAddListing = () => {
+        navigate('/admin/add-listing'); // Replace with your actual form route
+    };
+
+    if (error) {
+        return <p>{error}</p>;
+    }
 
     return (
         <div className="listing-section">
@@ -78,7 +90,20 @@ const ListingCard = ({ activeCategory }) => {
                     </div>
                 ))
             ) : (
-                <p>Loading listings...</p>
+                <p>No listings available in this category.</p>
+            )}
+
+            {/* Show "Add Listing" button if the current user is an admin */}
+            {currentUserRole === 'admin' && (
+                <div className="listing-card">
+                    <div
+                        className="add-listing-card"
+                        onClick={handleAddListing}
+                    >
+                        <img src="https://cdn-icons-png.flaticon.com/512/6711/6711415.png" alt="Add" />
+                        Add Listing
+                    </div>
+                </div>
             )}
         </div>
     );

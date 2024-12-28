@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import "../styles/Login.css"; // Import the CSS file
 
 const Signup = () => {
     const [username, setUsername] = useState("");
@@ -9,7 +10,7 @@ const Signup = () => {
 
     const handleSignup = async () => {
         try {
-            const response = await axios.post("http://localhost:4000/signup", {
+            const response = await axios.post("http://localhost:4000/api/auth/register", {
                 username,
                 password,
             });
@@ -21,21 +22,25 @@ const Signup = () => {
     };
 
     return (
-        <div>
-            <h2>Signup</h2>
-            <input
-                type="text"
-                placeholder="Username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-            />
-            <input
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-            />
-            <button onClick={handleSignup}>Signup</button>
+        <div className="login-container">
+            <div className="login-card">
+                <h2>Signup</h2>
+                <input
+                    type="text"
+                    placeholder="Username"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    className="login-input"
+                />
+                <input
+                    type="password"
+                    placeholder="Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="login-input"
+                />
+                <button onClick={handleSignup} className="login-button">Signup</button>
+            </div>
         </div>
     );
 };

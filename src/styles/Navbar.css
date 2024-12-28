@@ -143,6 +143,10 @@
     width: 32px;
     fill: currentColor;
 }
+.navbar-user-icon.logged-in svg path {
+    fill: #ff0056; /* Pink color */
+}
+
 
 .navbar-dropdown-menu {
     position: absolute;

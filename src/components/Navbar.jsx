@@ -9,6 +9,8 @@ const Navbar = () => {
     const dropdownRef = useRef(null); // Create a ref for the dropdown menu
     const [serverStatus, setServerStatus] = useState(false);
     const navigate = useNavigate(); // Initialize navigate
+    const [currentUserRole, setCurrentUserRole] = useState('user'); // default to 'user'
+
 
 
     // Function to fetch server status
@@ -22,12 +24,34 @@ const Navbar = () => {
                 setServerStatus(false); // Set server status to false if there's an error
             });
     };
-
+    const checkRole = () => {
+        axios.get('http://localhost:4000/current-user')
+            .then((response) => {
+                const userId = response.data.userId;
+                // Fetch user details by ID to get the role
+                axios.get(`http://localhost:4000/api/user-role/${userId}`)
+                    .then((roleResponse) => {
+                        setCurrentUserRole(roleResponse.data.role); // Set the role
+                    })
+                    .catch((error) => {
+                        console.error('Error fetching user role:', error);
+                    });
+            })
+            .catch((error) => {
+                console.error('Error fetching current user:', error);
+            });
+    };
+    useEffect(() => {
+        if (serverStatus) {
+            checkRole();
+        }
+    }, [serverStatus]);
     // Toggle dropdown and check server status when dropdown is opened
     const toggleDropdown = () => {
         setIsDropdownOpen((prevState) => {
             const newState = !prevState;
             if (newState) {
+                //checkRole();
                 checkServerStatus(); // Check server status when opening dropdown
             }
             return newState;
@@ -49,6 +73,7 @@ const Navbar = () => {
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
+
     }, []);
 
     const handleNavigate = (path) => {
@@ -69,12 +94,12 @@ const Navbar = () => {
                         fill="#ff0056"
                     />
                 </svg>
-                <div className="title">
+                <div className="title" onClick={() => handleNavigate('/')}>
                     airbnb
                 </div>
             </div>
             <ul className="navbar-links">
-                <li>Home</li>
+                <li  onClick={() => handleNavigate('/')}>Home</li>
                 <li>Experiences</li>
                 <li>Online Experiences</li>
             </ul>
@@ -96,7 +121,9 @@ const Navbar = () => {
                             </g>
                         </svg>
                     </span>
-                    <span className="navbar-user-icon">
+                    <span
+                        className={`navbar-user-icon ${serverStatus ? 'logged-in' : ''}`}
+                    >
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" aria-hidden="true" role="presentation" focusable="false">
                             <path d="M16 .7C7.56.7.7 7.56.7 16S7.56 31.3 16 31.3 31.3 24.44 31.3 16 24.44.7 16 .7zm0 28c-4.02 0-7.6-1.88-9.93-4.81a12.43 12.43 0 0 1 6.45-4.4A6.5 6.5 0 0 1 9.5 14a6.5 6.5 0 0 1 13 0 6.51 6.51 0 0 1-3.02 5.5 12.42 12.42 0 0 1 6.45 4.4A12.67 12.67 0 0 1 16 28.7z"></path>
                         </svg>
@@ -104,24 +131,30 @@ const Navbar = () => {
 
                     {isDropdownOpen && (
                         <div className="navbar-dropdown-menu" ref={dropdownRef}>
-                        <ul>
-                        {!serverStatus && (
-                            <>
-                                <li onClick={() => handleNavigate('/signup')}>Sign up</li>
-                                <li onClick={() => handleNavigate('/login')}>Login</li>
-                            </>
-                        )}
-                            <li>Gift card</li>
-                            <li>Airbnb your home</li>
-                            <li>Host an experience</li>
-                            <li>Help center</li>
-                            {serverStatus && (
-                            <>
-                               <li onClick={() => handleNavigate('/logout')}>Logout</li>
-                            </>
-                        )}
-                        </ul>
-                    </div>
+                            <ul>
+                                {!serverStatus && (
+                                    <>
+                                        <li onClick={() => handleNavigate('/signup')}>Sign up</li>
+                                        <li onClick={() => handleNavigate('/login')}>Login</li>
+                                    </>
+                                )}
+                                {currentUserRole === 'user' && serverStatus && (
+                                    <li onClick={() => handleNavigate('/my-profile')}>My Profile</li>
+                                )}
+                                <li>Gift card</li>
+                                <li>Airbnb your home</li>
+                                <li>Host an experience</li>
+                                <li>Help center</li>
+                                {currentUserRole === 'admin' && serverStatus && (
+                                    <li onClick={() => handleNavigate('/manage-users')}>Manage Users</li>
+                                )}
+                                {serverStatus && (
+                                    <>
+                                        <li onClick={() => handleNavigate('/logout')}>Logout</li>
+                                    </>
+                                )}
+                            </ul>
+                        </div>
                     )}
                 </div>
 

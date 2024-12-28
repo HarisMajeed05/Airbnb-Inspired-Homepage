@@ -1,0 +1,100 @@
+
+
+.manage-users {
+    max-width: 1200px;
+    margin: 20px auto;
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.manage-users h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Table Styles */
+.users-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+.users-table th,
+.users-table td {
+    border: 1px solid #ddd;
+    padding: 10px 15px;
+    text-align: center;
+}
+
+.users-table th {
+    background-color: #74b9ff;
+    color: white;
+    text-transform: uppercase;
+    font-size: 14px;
+}
+
+.users-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.users-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Buttons */
+.delete-btn,
+.edit-btn,
+.delete-booking-btn {
+    padding: 6px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.delete-btn {
+    background-color: #ff7675;
+    color: white;
+}
+
+.delete-btn:hover {
+    background-color: #d63031;
+}
+
+.edit-btn {
+    background-color: #74b9ff;
+    color: white;
+}
+
+.edit-btn:hover {
+    background-color: #0984e3;
+}
+
+.delete-booking-btn {
+    background-color: #fab1a0;
+    color: white;
+    font-size: 12px;
+    margin-left: 10px;
+}
+
+.delete-booking-btn:hover {
+    background-color: #e17055;
+}
+
+/* Error and Loading States */
+.error {
+    color: #d63031;
+    text-align: center;
+    font-size: 16px;
+}
+
+/* Booking Items */
+.booking-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
