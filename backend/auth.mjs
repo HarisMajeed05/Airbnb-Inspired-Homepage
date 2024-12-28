@@ -61,21 +61,7 @@ const predefinedAdmins = [
         }
     }
 })();
-// Middleware for verifying JWT token
-const verifyToken = (req, res, next) => {
-    const token = req.headers["authorization"]?.split(" ")[1];
-    if (!token) {
-        return res.status(403).json({ error: "No token provided" });
-    }
 
-    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-        if (err) {
-            return res.status(401).json({ error: "Unauthorized" });
-        }
-        req.user = decoded; // Store the decoded JWT payload (user info) in the request object
-        next();
-    });
-};
 // Signup
 app.post("/api/auth/register", async (req, res) => {
     const { username, password } = req.body;
@@ -302,11 +288,30 @@ app.get('/api/user/user-details', async (req, res) => {
         res.status(500).json({ error: "Error fetching user details" });
     }
 });
-app.put('/api/user/update/user-details', verifyToken, async (req, res) => {
+const authenticate = (req, res, next) => {
+    const token = req.headers['authorization']?.split(' ')[1]; // Extract the token
+  
+    if (!token) {
+      return res.status(401).json({ message: 'No token provided' });
+    }
+  
+    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+      if (err) {
+        return res.status(401).json({ message: 'Unauthorized' });
+      }
+      req.user = decoded; // Store the decoded user information in request object
+      next(); // Proceed to the next middleware or route handler
+    });
+  };
+  
+  // Protect the route
+
+app.put('/api/user/update/user-details', authenticate, async (req, res) => {
     const userId = req.user.id; // Get user ID from JWT payload
     console.log(userId);
     const { username, password } = req.body;
-
+console.log(username);
+console.log(password);
     try {
         const user = await User.findById(userId);
         if (!user) {

@@ -15,21 +15,25 @@ const MyProfile = () => {
   // Fetch the user details when the component mounts
   useEffect(() => {
     const fetchUserDetails = async () => {
-        try {
-          const response = await axios.get("http://localhost:4000/api/user/user-details", {
-            withCredentials: true, // Ensure credentials are sent with the request
-          });
-          setUserDetails(response.data);
-          setFormData({
-            username: response.data.username,
-            role: response.data.role,
-            password: '', // Reset the password field when loading user data
-          });
-        } catch (err) {
-          setError("Error fetching user details");
-          console.error(err); // Log any error for debugging
-        }
-      };
+      try {
+        const token = localStorage.getItem("token"); // Get the token from local storage
+        const response = await axios.get("http://localhost:4000/api/user/user-details", {
+          headers: {
+            'Authorization': `Bearer ${token}` // Send the token in the Authorization header
+          },
+          withCredentials: true, // Ensure credentials are sent with the request
+        });
+        setUserDetails(response.data);
+        setFormData({
+          username: response.data.username,
+          role: response.data.role,
+          password: '', // Reset the password field when loading user data
+        });
+      } catch (err) {
+        setError("Error fetching user details");
+        console.error(err); // Log any error for debugging
+      }
+    };
 
     fetchUserDetails();
   }, []);
@@ -46,18 +50,28 @@ const MyProfile = () => {
   // Handle form submission for updating the profile
   const handleSubmit = async (e) => {
     e.preventDefault();
+  
     try {
       // If password is empty, don't send it in the update request
-      const updatedData = { 
-        username: formData.username, 
-        password: formData.password ? formData.password : undefined // Only send password if it's provided
+      const updatedData = {
+        username: formData.username,
+        password: formData.password ? formData.password : undefined, // Only send password if it's provided
       };
-
+  
+      // Get the token from localStorage or wherever it's stored
+      const token = localStorage.getItem("token");
+  
       const response = await axios.put(
         "http://localhost:4000/api/user/update/user-details",
         updatedData,
-        { withCredentials: true }
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Attach the token in the Authorization header
+          },
+          withCredentials: true, // Ensure cookies are sent with the request if needed
+        }
       );
+  
       setUserDetails(response.data);
       setEditing(false); // Close the edit form
     } catch (err) {
@@ -65,6 +79,7 @@ const MyProfile = () => {
       console.error(err);
     }
   };
+  
 
   if (error) {
     return <div className="error-message">{error}</div>;
