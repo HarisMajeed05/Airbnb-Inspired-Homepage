@@ -9,7 +9,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const app = express();
-const PORT = 7000;
+const PORT = 4000;
 
 let currentUserId = null;
 let currentUserRole = 'user';
@@ -23,7 +23,9 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
+
 app.use(bodyParser.json());
+
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log("Connected to MongoDB"))
     .catch((err) => console.error("Error connecting to MongoDB:", err));
@@ -117,7 +119,6 @@ app.post("/api/auth/login", async (req, res) => {
 });
 
 
-// Logout
 app.post("/api/auth/logout", (req, res) => {
     console.log("User logged out:", currentUserId);
     currentUserId = null;
@@ -126,7 +127,7 @@ app.post("/api/auth/logout", (req, res) => {
 });
 
 
-// Handle booking a venue
+// Route to handle booking a venue
 app.post("/api/bookings/:category/:id", async (req, res) => {
     const { category, id } = req.params;
 
@@ -158,7 +159,6 @@ app.post("/api/bookings/:category/:id", async (req, res) => {
         res.status(500).json({ error: "Error booking venue" });
     }
 });
-
 app.get("/api/:category/:id/is-booked", async (req, res) => {
     const { category, id } = req.params;
 
@@ -178,7 +178,6 @@ app.get("/api/:category/:id/is-booked", async (req, res) => {
         res.status(500).json({ error: "Error checking booking status" });
     }
 });
-
 app.get("/api/user-role/:userId", async (req, res) => {
     const { userId } = req.params;
 
@@ -193,7 +192,6 @@ app.get("/api/user-role/:userId", async (req, res) => {
         res.status(500).json({ error: "Error fetching user role" });
     }
 });
-// Check Current User
 app.get("/current-user", (req, res) => {
     if (currentUserId) {
         console.log(currentUserId);
@@ -226,7 +224,6 @@ app.delete('/api/users/:id', async (req, res) => {
         res.status(500).send('Error deleting user');
     }
 });
-// Delete a specific booking
 app.delete('/users/:userId/bookings/:bookingId', async (req, res) => {
     const { userId, bookingId } = req.params;
 
@@ -250,6 +247,7 @@ app.delete('/users/:userId/bookings/:bookingId', async (req, res) => {
         res.status(500).json({ error: 'Error deleting booking' });
     }
 });
+// Fetch the details of the current logged-in user
 app.get('/api/user/user-details', async (req, res) => {
     if (!currentUserId) {
         return res.status(401).json({ error: "No user logged in" });
@@ -319,4 +317,5 @@ console.log(password);
     }
 });
 
+// Start the server
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

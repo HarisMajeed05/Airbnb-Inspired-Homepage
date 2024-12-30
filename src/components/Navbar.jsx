@@ -6,22 +6,21 @@ import axios from 'axios';
 const Navbar = () => {
 
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-    const dropdownRef = useRef(null); // Create a ref for the dropdown menu
+    const dropdownRef = useRef(null);
     const [serverStatus, setServerStatus] = useState(false);
-    const navigate = useNavigate(); // Initialize navigate
-    const [currentUserRole, setCurrentUserRole] = useState('user'); // default to 'user'
+    const navigate = useNavigate(); 
+    const [currentUserRole, setCurrentUserRole] = useState('user'); 
 
 
 
-    // Function to fetch server status
     const checkServerStatus = () => {
         axios.get('http://localhost:4000/checkStatus')
             .then((response) => {
-                setServerStatus(response.data ? true : false); // Set server status based on response
+                setServerStatus(response.data ? true : false); 
             })
             .catch((error) => {
                 console.error('Error checking server status:', error);
-                setServerStatus(false); // Set server status to false if there's an error
+                setServerStatus(false);
             });
     };
     const checkRole = () => {
@@ -46,30 +45,26 @@ const Navbar = () => {
             checkRole();
         }
     }, [serverStatus]);
-    // Toggle dropdown and check server status when dropdown is opened
     const toggleDropdown = () => {
         setIsDropdownOpen((prevState) => {
             const newState = !prevState;
             if (newState) {
                 //checkRole();
-                checkServerStatus(); // Check server status when opening dropdown
+                checkServerStatus(); 
             }
             return newState;
         });
     };
 
-    // Close the dropdown if clicked outside
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-                setIsDropdownOpen(false); // Close dropdown if clicking outside
+                setIsDropdownOpen(false);
             }
         };
 
-        // Add event listener for clicks outside
         document.addEventListener('mousedown', handleClickOutside);
 
-        // Cleanup event listener on component unmount
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
@@ -77,7 +72,7 @@ const Navbar = () => {
     }, []);
 
     const handleNavigate = (path) => {
-        navigate(path); // Navigate to the specified path
+        navigate(path);
     };
     return (
         <nav className="navbar">

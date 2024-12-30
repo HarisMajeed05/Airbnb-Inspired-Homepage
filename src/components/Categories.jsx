@@ -75,11 +75,10 @@ const categories = [
 
 
 const Categories = ({ activeCategory, setActiveCategory }) => {
-    // const [activeCategory, setActiveCategory] = useState("Icons"); // State to track the active category
-    const categoriesRef = useRef([]); // Create a ref for each category button
+    const categoriesRef = useRef([]);
 
     const handleCategoryClick = (categoryName) => {
-        setActiveCategory(categoryName); // Set the active category when clicked
+        setActiveCategory(categoryName);
     };
     useEffect(() => {
         if (activeCategory) {
@@ -87,18 +86,17 @@ const Categories = ({ activeCategory, setActiveCategory }) => {
         }
     }, [activeCategory]);
     useEffect(() => {
-        // IntersectionObserver to detect if a category is in view
         const observer = new IntersectionObserver(
             (entries) => {
                 entries.forEach((entry) => {
                     if (entry.isIntersecting) {
-                        entry.target.classList.add('category-visible'); // Remove blur when in view
+                        entry.target.classList.add('category-visible'); 
                     } else {
-                        entry.target.classList.remove('category-visible'); // Add blur when out of view
+                        entry.target.classList.remove('category-visible'); 
                     }
                 });
             },
-            { threshold: 0.75 } // Only remove blur when 75% of the category is visible
+            { threshold: 0.75 } 
         );
 
         categoriesRef.current.forEach((category) => {
@@ -107,7 +105,6 @@ const Categories = ({ activeCategory, setActiveCategory }) => {
             }
         });
 
-        // Cleanup the observer on component unmount
         return () => {
             categoriesRef.current.forEach((category) => {
                 if (category) {

@@ -19,7 +19,6 @@ const Footer = () => {
                     <span>💲 USD</span>
                 </div>
                 <div className="footer-social-icons">
-                    {/* Updated Facebook Icon */}
                     <a href="https://www.facebook.com" className="social-icon facebook-icon" aria-label="Facebook">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -68,7 +67,6 @@ const Footer = () => {
                             ></path>
                         </svg>
                     </a>
-                    {/* Add other social icons similarly */}
                 </div>
             </div>
         </footer>

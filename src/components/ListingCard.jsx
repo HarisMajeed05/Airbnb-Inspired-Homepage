@@ -8,9 +8,8 @@ const ListingCard = ({ activeCategory }) => {
     const [listings, setListings] = useState([]);
     const [currentUserRole, setCurrentUserRole] = useState('user'); // default to 'user'
     const [error, setError] = useState(null);
-    const navigate = useNavigate(); // Hook for navigation
+    const navigate = useNavigate();
 
-    // Fetch the listing data based on the active category
     useEffect(() => {
         axios.get(`http://localhost:5000/api/${activeCategory}`)
             .then((response) => {
@@ -21,14 +20,12 @@ const ListingCard = ({ activeCategory }) => {
                 setError('Failed to fetch listings.');
             });
 
-        // Fetch current user's role
         axios.get('http://localhost:4000/current-user')
             .then((response) => {
                 const userId = response.data.userId;
-                // Fetch user details by ID to get the role
                 axios.get(`http://localhost:4000/api/user-role/${userId}`)
                     .then((roleResponse) => {
-                        setCurrentUserRole(roleResponse.data.role); // Set the role
+                        setCurrentUserRole(roleResponse.data.role);
                     })
                     .catch((error) => {
                         console.error('Error fetching user role:', error);
@@ -50,9 +47,8 @@ const ListingCard = ({ activeCategory }) => {
             });
     };
 
-    // Redirect to the "Add Listing" form
     const handleAddListing = () => {
-        navigate('/admin/add-listing'); // Replace with your actual form route
+        navigate('/admin/add-listing');
     };
 
     if (error) {
@@ -78,7 +74,6 @@ const ListingCard = ({ activeCategory }) => {
                             </div>
                         </Link>
 
-                        {/* Show delete button only if the current user is an admin */}
                         {currentUserRole === 'admin' && (
                             <button
                                 className="delete-button"
@@ -93,7 +88,6 @@ const ListingCard = ({ activeCategory }) => {
                 <p>No listings available in this category.</p>
             )}
 
-            {/* Show "Add Listing" button if the current user is an admin */}
             {currentUserRole === 'admin' && (
                 <div className="listing-card">
                     <div

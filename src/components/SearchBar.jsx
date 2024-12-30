@@ -27,44 +27,39 @@ const SearchBar = () => {
     const [date, setDate] = useState('');
     const [guests, setGuests] = useState('');
 
-    // Create a ref to hold references to the input elements
     const inputsRef = useRef([]);
 
     useEffect(() => {
         const inputs = inputsRef.current;
 
-        // Define focus event handler
         const handleFocus = (input) => {
             inputs.forEach(i => {
                 if (i && i !== input) {
-                    i.style.opacity = '0.5'; // Dull effect on other inputs
+                    i.style.opacity = '0.5';
                 }
             });
         };
 
-        // Define blur event handler
         const handleBlur = () => {
             inputs.forEach(i => {
                 if (i) {
-                    i.style.opacity = '1'; // Restore opacity on blur
+                    i.style.opacity = '1'; 
                 }
             });
         };
 
 
-        // Add event listeners to each input
         inputs.forEach(input => {
-            if (input) { // Check if input exists
+            if (input) {
                 input.addEventListener('focus', () => handleFocus(input));
                 input.addEventListener('blur', handleBlur);
 
             }
         });
 
-        // Cleanup event listeners on component unmount
         return () => {
             inputs.forEach(input => {
-                if (input) { // Check if input exists
+                if (input) {
                     input.removeEventListener('focus', () => handleFocus(input));
                     input.removeEventListener('blur', handleBlur);
                 }
@@ -80,21 +75,21 @@ const SearchBar = () => {
                     placeholder="Anywhere"
                     value={location}
                     onChange={(e) => setLocation(e.target.value)}
-                    ref={el => inputsRef.current[0] = el} // Save reference to the input
+                    ref={el => inputsRef.current[0] = el} 
                 />
                 <input
                     type="text"
                     placeholder="Any week"
                     value={date}
                     onChange={(e) => setDate(e.target.value)}
-                    ref={el => inputsRef.current[1] = el} // Save reference to the input
+                    ref={el => inputsRef.current[1] = el}
                 />
                 <input
                     type="text"
                     placeholder="Add guests"
                     value={guests}
                     onChange={(e) => setGuests(e.target.value)}
-                    ref={el => inputsRef.current[2] = el} // Save reference to the input
+                    ref={el => inputsRef.current[2] = el} 
                 />
                 <button className="search-button">🔍</button>
             </div>

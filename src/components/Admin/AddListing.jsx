@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import '../styles/Admin/AddListing.css'; // Add custom styles here if needed
+import '../../styles/Admin/AddListing.css'; 
 
 const AddListing = ({ activeCategory }) => {
     const navigate = useNavigate();
@@ -42,7 +42,7 @@ const AddListing = ({ activeCategory }) => {
         axios.post(`http://localhost:5000/api/add-listing/${activeCategory}`, formData)
             .then(() => {
                 alert('Listing added successfully!');
-                navigate('/'); // Redirect to home or listings page after successful addition
+                navigate('/');
             })
             .catch((err) => {
                 console.error('Error adding listing:', err);

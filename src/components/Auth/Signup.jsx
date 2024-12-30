@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import "../styles/Auth/Login.css"; // Import the CSS file
+import "../../styles/Auth/Login.css";
 
 const Signup = () => {
     const [username, setUsername] = useState("");
@@ -15,7 +15,7 @@ const Signup = () => {
                 password,
             });
             alert(response.data.message);
-            navigate(response.data.redirectPath); // Use the redirectPath from the response
+            navigate(response.data.redirectPath); 
         } catch (err) {
             alert(err.response?.data?.error || "An error occurred during signup.");
         }

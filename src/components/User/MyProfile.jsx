@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import '../styles/User/MyProfile.css'; // Import the CSS file
+import '../../styles/User/MyProfile.css';
 
 const MyProfile = () => {
   const [userDetails, setUserDetails] = useState(null);
@@ -8,37 +8,35 @@ const MyProfile = () => {
   const [editing, setEditing] = useState(false);
   const [formData, setFormData] = useState({
     username: '',
-    password: '', // Include password field but don't require it initially
+    password: '',
     role: ''
   });
 
-  // Fetch the user details when the component mounts
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
-        const token = localStorage.getItem("token"); // Get the token from local storage
+        const token = localStorage.getItem("token");
         const response = await axios.get("http://localhost:4000/api/user/user-details", {
           headers: {
-            'Authorization': `Bearer ${token}` // Send the token in the Authorization header
+            'Authorization': `Bearer ${token}`
           },
-          withCredentials: true, // Ensure credentials are sent with the request
+          withCredentials: true,
         });
         setUserDetails(response.data);
         setFormData({
           username: response.data.username,
           role: response.data.role,
-          password: '', // Reset the password field when loading user data
+          password: '',
         });
       } catch (err) {
         setError("Error fetching user details");
-        console.error(err); // Log any error for debugging
+        console.error(err); 
       }
     };
 
     fetchUserDetails();
   }, []);
 
-  // Handle form data changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -47,18 +45,15 @@ const MyProfile = () => {
     }));
   };
 
-  // Handle form submission for updating the profile
   const handleSubmit = async (e) => {
     e.preventDefault();
   
     try {
-      // If password is empty, don't send it in the update request
       const updatedData = {
         username: formData.username,
-        password: formData.password ? formData.password : undefined, // Only send password if it's provided
+        password: formData.password ? formData.password : undefined,
       };
   
-      // Get the token from localStorage or wherever it's stored
       const token = localStorage.getItem("token");
   
       const response = await axios.put(
@@ -66,14 +61,14 @@ const MyProfile = () => {
         updatedData,
         {
           headers: {
-            Authorization: `Bearer ${token}`, // Attach the token in the Authorization header
+            Authorization: `Bearer ${token}`,
           },
-          withCredentials: true, // Ensure cookies are sent with the request if needed
+          withCredentials: true,
         }
       );
   
       setUserDetails(response.data);
-      setEditing(false); // Close the edit form
+      setEditing(false);
     } catch (err) {
       setError("Error updating profile");
       console.error(err);

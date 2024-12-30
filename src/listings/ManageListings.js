@@ -4,14 +4,17 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import { MongoClient } from 'mongodb';
 
+// Initialize the Express app
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
+// MongoDB connection
 mongoose.connect('mongodb://localhost:27017/airbnbListings', { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('Connected to MongoDB'))
   .catch((err) => console.log('Error connecting to MongoDB:', err));
 
+// MongoDB native client for 'Icons' and 'TopCities' collections
 const uri = 'mongodb://localhost:27017';
 const client = new MongoClient(uri);
 let database;
@@ -23,6 +26,7 @@ client.connect()
   })
   .catch((err) => console.log('Error connecting to MongoDB client:', err));
 
+// Route to get all Icons
 app.get('/api/icons', async (req, res) => {
   try {
     const iconsCollection = database.collection('icons');
@@ -33,6 +37,7 @@ app.get('/api/icons', async (req, res) => {
   }
 });
 
+// Route to get all TopCities
 app.get('/api/topcities', async (req, res) => {
   try {
     const topCitiesCollection = database.collection('topcities');
@@ -43,9 +48,10 @@ app.get('/api/topcities', async (req, res) => {
   }
 });
 
+// Route to add listings (for initial data or testing)
 app.post('/api/listings', async (req, res) => {
   try {
-    const newListings = req.body;
+    const newListings = req.body;  // Expecting an array of listings
     const listingsCollection = database.collection('listings');
     await listingsCollection.insertMany(newListings);
     res.status(201).send('Listings saved');
@@ -54,16 +60,20 @@ app.post('/api/listings', async (req, res) => {
   }
 });
 
+// DELETE route to remove a listing from a dynamic collection
 app.delete('/api/:category/:id', async (req, res) => {
   const { category, id } = req.params;
   try {
-    const validCategories = ['icons', 'topcities'];
+    // Ensure the category is valid before proceeding
+    const validCategories = ['icons', 'topcities']; // Add other valid categories if needed
     if (!validCategories.includes(category.toLowerCase())) {
       return res.status(400).json({ error: 'Invalid category' });
     }
 
+    // Get the specific collection based on category
     const collection = database.collection(category.toLowerCase());
 
+    // Delete the listing from the collection
     const result = await collection.deleteOne({ _id: new mongoose.Types.ObjectId(id) });
 
     if (result.deletedCount === 0) {
@@ -81,13 +91,16 @@ app.post('/api/add-listing/:category', async (req, res) => {
   const newListing = req.body;
 
   try {
+    // Get all collections in the database
     const collections = await database.listCollections().toArray();
     const collectionNames = collections.map(col => col.name);
 
+    // Check if the collection exists
     if (!collectionNames.includes(category.toLowerCase())) {
       return res.status(400).json({ error: `Collection ${category} does not exist` });
     }
 
+    // Get the collection and insert the new listing
     const collection = database.collection(category.toLowerCase());
     await collection.insertOne(newListing);
     console.log(`Inserted listing into ${category} collection`);
@@ -99,7 +112,8 @@ app.post('/api/add-listing/:category', async (req, res) => {
   }
 });
 
-const PORT = process.env.PORT || 6000;
+// Start the server
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });

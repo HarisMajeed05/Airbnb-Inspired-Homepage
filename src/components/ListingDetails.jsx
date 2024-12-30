@@ -1,25 +1,24 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
-import "../styles/ListingDetails.css"; // Import the CSS file
+import "../styles/ListingDetails.css";
 
 const ListingDetails = ({ activeCategory }) => {
-    const { id } = useParams(); // Get the id from the URL
-    const [listing, setListing] = useState(null); // State to hold the listing details
-    const [isBooked, setIsBooked] = useState(false); // State to track if the listing is booked
-    const [error, setError] = useState(null); // State to handle errors
-    const [loading, setLoading] = useState(true); // State to track loading state
+    const { id } = useParams();
+    const [listing, setListing] = useState(null);
+    const [isBooked, setIsBooked] = useState(false); 
+    const [error, setError] = useState(null); 
+    const [loading, setLoading] = useState(true); 
     const navigate = useNavigate();
-    const [currentUserRole, setCurrentUserRole] = useState('user'); // default to 'user'
+    const [currentUserRole, setCurrentUserRole] = useState('user');
 
     const checkRole = () => {
         axios.get('http://localhost:4000/current-user')
         .then((response) => {
             const userId = response.data.userId;
-            // Fetch user details by ID to get the role
             axios.get(`http://localhost:4000/api/user-role/${userId}`)
                 .then((roleResponse) => {
-                    setCurrentUserRole(roleResponse.data.role); // Set the role
+                    setCurrentUserRole(roleResponse.data.role);
                 })
                 .catch((error) => {
                     console.error('Error fetching user role:', error);
@@ -36,7 +35,6 @@ const ListingDetails = ({ activeCategory }) => {
             try {
                 const category = typeof activeCategory === "string" ? activeCategory.toLowerCase() : "icons";
 
-                // Fetch listing details
                 const response = await fetch(`http://localhost:5000/api/${category}`);
                 if (!response.ok) {
                     throw new Error("Failed to fetch listings");
@@ -47,7 +45,6 @@ const ListingDetails = ({ activeCategory }) => {
                 if (foundListing) {
                     setListing(foundListing);
 
-                    // Check if the listing is already booked
                     const bookingResponse = await fetch(`http://localhost:4000/api/${category}/${id}/is-booked`);
                     if (!bookingResponse.ok) {
                         throw new Error("Failed to check booking status");
@@ -91,7 +88,7 @@ const ListingDetails = ({ activeCategory }) => {
 
             if (response.ok) {
                 alert(data.message);
-                setIsBooked(true); // Mark as booked after successful booking
+                setIsBooked(true); 
             } else {
                 alert(data.error || "Booking failed");
             }

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import '../styles/Admin/ManageUsers.css'; // Optional: Include custom styling
+import '../../styles/Admin/ManageUsers.css'; 
 
 const ManageUsers = () => {
     const [users, setUsers] = useState([]);
@@ -12,7 +12,7 @@ const ManageUsers = () => {
         setLoading(true);
         setError(null);
         try {
-            const response = await axios.get('http://localhost:4000/users'); // Update with your API endpoint
+            const response = await axios.get('http://localhost:4000/users'); 
             setUsers(response.data);
         } catch (err) {
             setError('Error fetching users. Please try again.');
@@ -24,8 +24,8 @@ const ManageUsers = () => {
     // Delete a user
     const deleteUser = async (userId) => {
         try {
-            await axios.delete(`http://localhost:4000/api/users/${userId}`); // Update with your API endpoint
-            setUsers(users.filter(user => user._id !== userId)); // Remove user from state
+            await axios.delete(`http://localhost:4000/api/users/${userId}`);
+            setUsers(users.filter(user => user._id !== userId)); 
         } catch (err) {
             alert('Error deleting user. Please try again.');
         }
@@ -33,7 +33,7 @@ const ManageUsers = () => {
     // Delete a specific booking for a user
     const deleteBooking = async (userId, bookingId) => {
         try {
-            await axios.delete(`http://localhost:4000/users/${userId}/bookings/${bookingId}`); // Update with your API endpoint
+            await axios.delete(`http://localhost:4000/users/${userId}/bookings/${bookingId}`); 
             setUsers(users.map(user => {
                 if (user._id === userId) {
                     return {
@@ -68,7 +68,7 @@ const ManageUsers = () => {
                     </thead>
                     <tbody>
                         {users
-                            .filter(user => user.role === "user") // Filter to include only users with role "user"
+                            .filter(user => user.role === "user") 
                             .map(user => (
                                 <tr key={user._id}>
                                     <td>{user.username}</td>
