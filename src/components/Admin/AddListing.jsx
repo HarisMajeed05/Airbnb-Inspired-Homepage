@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import '../../styles/Admin/AddListing.css'; 
+import '../../styles/Admin/AddListing.css';
 
 const AddListing = ({ activeCategory }) => {
     const navigate = useNavigate();
+    const [serverStatus, setServerStatus] = useState(false);
+    const [currentUserRole, setCurrentUserRole] = useState('');
+    const [currentUserId, setCurrentUserId] = useState(''); // Store the current user ID
     const [formData, setFormData] = useState({
         id: '',
         image: '',
@@ -20,8 +23,54 @@ const AddListing = ({ activeCategory }) => {
         price: '',
         status: '',
         rating: '',
+        addedBy: '',  // Initially empty, will be set after role is fetched
     });
     const [error, setError] = useState(null);
+
+    // Check server status
+    const checkServerStatus = () => {
+        axios.get('http://localhost:4000/checkStatus')
+            .then((response) => {
+                setServerStatus(response.data ? true : false);
+            })
+            .catch((error) => {
+                console.error('Error checking server status:', error);
+                setServerStatus(false);
+            });
+    };
+
+    // Check current user role and userId
+    const checkRole = async () => {
+        try {
+            const userResponse = await axios.get('http://localhost:4000/current-user');
+            const userId = userResponse.data.userId;
+            setCurrentUserId(userId); // Store user ID
+            console.log('Current User ID:', userId);
+
+            // Fetch user role by userId
+            const roleResponse = await axios.get(`http://localhost:4000/api/user-role/${userId}`);
+            setCurrentUserRole(roleResponse.data.role); // Set the role
+            console.log('Current User Role:', roleResponse.data.role);
+
+        } catch (error) {
+            console.error('Error fetching user role:', error);
+        }
+    };
+
+    useEffect(() => {
+        checkServerStatus();
+        checkRole();
+    }, []);
+
+    // Update formData when currentUserRole changes
+    useEffect(() => {
+        if (currentUserRole) {
+            setFormData((prevData) => ({
+                ...prevData,
+                addedBy: currentUserRole === 'admin' ? 'admin' : currentUserId,  // Set addedBy based on role
+            }));
+        }
+    }, [currentUserRole, currentUserId]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;

@@ -58,20 +58,33 @@ const predefinedAdmins = [
 
 // Signup
 app.post("/api/auth/register", async (req, res) => {
-    const { username, password } = req.body;
+    const { username, password, role } = req.body;
+
     try {
+        // Validate the role
+        if (!['host', 'guest'].includes(role)) {
+            return res.status(400).json({ error: "Invalid role. Must be 'host' or 'guest'." });
+        }
+        const existingUser = await User.findOne({ username });
+        if (existingUser) {
+            return res.status(400).json({ error: "Username already exists." });
+        }
+
         const hashedPassword = await bcrypt.hash(password, 10);
-        const user = new User({ username, password: hashedPassword });
+
+        const user = new User({ username, password: hashedPassword, role });
         await user.save();
+
         res.status(201).json({
             message: "User registered successfully",
-            redirectPath: "/login"
+            redirectPath: "/login",
         });
     } catch (err) {
         console.error(`Error registering user: ${username}`, err);
         res.status(500).json({ error: "Error registering user" });
     }
 });
+
 
 // Login
 app.post("/api/auth/login", async (req, res) => {

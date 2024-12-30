@@ -68,7 +68,7 @@ const ManageUsers = () => {
                     </thead>
                     <tbody>
                         {users
-                            .filter(user => user.role === "user") 
+                            .filter(user => user.role === "guest") 
                             .map(user => (
                                 <tr key={user._id}>
                                     <td>{user.username}</td>

@@ -388,6 +388,7 @@ import Logout from "./components/Auth/Logout";
 import ManageUsers from "./components/Admin/ManageUsers";
 import AddListing from "./components/Admin/AddListing";
 import MyProfile from "./components/User/MyProfile";
+import ManageHostListings from "./components/host/ManageHostListings";
 import "./App.css";
 
 function App() {
@@ -400,7 +401,7 @@ function App() {
     navigate(`/`);
   };
 
-  const hideCategoriesOnRoutes = ["/login", "/signup", "/logout", "/my-profile", "/manage-users", "/admin/add-listing"];
+  const hideCategoriesOnRoutes = ["/login", "/signup", "/logout", "/my-profile", "/manage-users", "/admin/add-listing", "/manage-listings"];
 
   return (
     <div className="App">
@@ -432,6 +433,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/logout" element={<Logout />} />
           <Route path="/my-profile" element={<MyProfile />} />
+          <Route path="/manage-listings" element={<ManageHostListings />} />
           <Route path="/manage-users" element={<ManageUsers />} />
           <Route path="/admin/add-listing" element={<AddListing activeCategory={activeCategory}/>} />
         </Routes>

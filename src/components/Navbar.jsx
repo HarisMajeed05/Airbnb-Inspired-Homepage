@@ -9,7 +9,7 @@ const Navbar = () => {
     const dropdownRef = useRef(null);
     const [serverStatus, setServerStatus] = useState(false);
     const navigate = useNavigate(); 
-    const [currentUserRole, setCurrentUserRole] = useState('user'); 
+    const [currentUserRole, setCurrentUserRole] = useState('guest'); 
 
 
 
@@ -142,6 +142,9 @@ const Navbar = () => {
                                 <li>Help center</li>
                                 {currentUserRole === 'admin' && serverStatus && (
                                     <li onClick={() => handleNavigate('/manage-users')}>Manage Users</li>
+                                )}
+                                {currentUserRole === 'host' && serverStatus && (
+                                    <li onClick={() => handleNavigate('/manage-listings')}>Manage Listings</li>
                                 )}
                                 {serverStatus && (
                                     <>

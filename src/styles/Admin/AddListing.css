@@ -19,7 +19,7 @@
 }
 
 .add-listing-form input {
-    width: 100%;
+    width: 95%;
     padding: 10px;
     margin-bottom: 20px;
     border: 1px solid #ccc;
@@ -46,4 +46,14 @@
     color: red;
     margin-bottom: 15px;
     text-align: center;
+}
+@media (max-width: 780px) {
+    .add-listing-form{
+        max-width: 450px;
+    }
+}
+@media (max-width: 480px) {
+    .add-listing-form{
+        max-width: 300px;
+    }
 }

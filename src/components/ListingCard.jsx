@@ -7,10 +7,12 @@ import '../styles/ListingCard.css';
 const ListingCard = ({ activeCategory }) => {
     const [listings, setListings] = useState([]);
     const [currentUserRole, setCurrentUserRole] = useState('user'); // default to 'user'
+    const [currentUserId, setCurrentUserId] = useState(null); // Store the current user's ID
     const [error, setError] = useState(null);
     const navigate = useNavigate();
 
     useEffect(() => {
+        // Fetch listings from the active category
         axios.get(`http://localhost:5000/api/${activeCategory}`)
             .then((response) => {
                 setListings(response.data);
@@ -20,9 +22,13 @@ const ListingCard = ({ activeCategory }) => {
                 setError('Failed to fetch listings.');
             });
 
+        // Fetch current user ID and role
         axios.get('http://localhost:4000/current-user')
             .then((response) => {
                 const userId = response.data.userId;
+                setCurrentUserId(userId);
+
+                // Fetch the current user's role
                 axios.get(`http://localhost:4000/api/user-role/${userId}`)
                     .then((roleResponse) => {
                         setCurrentUserRole(roleResponse.data.role);
@@ -74,7 +80,8 @@ const ListingCard = ({ activeCategory }) => {
                             </div>
                         </Link>
 
-                        {currentUserRole === 'admin' && (
+                        {/* Show delete button only if current user is the one who added the listing */}
+                        {(currentUserRole === 'admin' || (currentUserRole === 'host' && listing.addedBy === currentUserId)) && (
                             <button
                                 className="delete-button"
                                 onClick={() => handleDelete(listing._id)}
@@ -88,7 +95,7 @@ const ListingCard = ({ activeCategory }) => {
                 <p>No listings available in this category.</p>
             )}
 
-            {currentUserRole === 'admin' && (
+            {(currentUserRole === 'admin' || currentUserRole === 'host') && (
                 <div className="listing-card">
                     <div
                         className="add-listing-card"
@@ -108,3 +115,4 @@ ListingCard.propTypes = {
 };
 
 export default ListingCard;
+  

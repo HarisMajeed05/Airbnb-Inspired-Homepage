@@ -4,17 +4,14 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import { MongoClient } from 'mongodb';
 
-// Initialize the Express app
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-// MongoDB connection
 mongoose.connect('mongodb://localhost:27017/airbnbListings', { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('Connected to MongoDB'))
   .catch((err) => console.log('Error connecting to MongoDB:', err));
 
-// MongoDB native client for 'Icons' and 'TopCities' collections
 const uri = 'mongodb://localhost:27017';
 const client = new MongoClient(uri);
 let database;
@@ -26,7 +23,6 @@ client.connect()
   })
   .catch((err) => console.log('Error connecting to MongoDB client:', err));
 
-// Route to get all Icons
 app.get('/api/icons', async (req, res) => {
   try {
     const iconsCollection = database.collection('icons');
@@ -37,7 +33,6 @@ app.get('/api/icons', async (req, res) => {
   }
 });
 
-// Route to get all TopCities
 app.get('/api/topcities', async (req, res) => {
   try {
     const topCitiesCollection = database.collection('topcities');
@@ -48,10 +43,49 @@ app.get('/api/topcities', async (req, res) => {
   }
 });
 
-// Route to add listings (for initial data or testing)
+app.get('/api/rooms', async (req, res) => {
+  try {
+    const topCitiesCollection = database.collection('rooms');
+    const topCities = await topCitiesCollection.find().toArray();
+    res.json(topCities);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
+app.get('/api/amazingviews', async (req, res) => {
+  try {
+    const topCitiesCollection = database.collection('amazingviews');
+    const topCities = await topCitiesCollection.find().toArray();
+    res.json(topCities);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
+app.get('/api/countryside', async (req, res) => {
+  try {
+    const topCitiesCollection = database.collection('countryside');
+    const topCities = await topCitiesCollection.find().toArray();
+    res.json(topCities);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
+app.get('/api/tinyhomes', async (req, res) => {
+  try {
+    const topCitiesCollection = database.collection('tinyhomes');
+    const topCities = await topCitiesCollection.find().toArray();
+    res.json(topCities);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
 app.post('/api/listings', async (req, res) => {
   try {
-    const newListings = req.body;  // Expecting an array of listings
+    const newListings = req.body;
     const listingsCollection = database.collection('listings');
     await listingsCollection.insertMany(newListings);
     res.status(201).send('Listings saved');
@@ -60,20 +94,16 @@ app.post('/api/listings', async (req, res) => {
   }
 });
 
-// DELETE route to remove a listing from a dynamic collection
 app.delete('/api/:category/:id', async (req, res) => {
   const { category, id } = req.params;
   try {
-    // Ensure the category is valid before proceeding
-    const validCategories = ['icons', 'topcities']; // Add other valid categories if needed
+    const validCategories = ['icons', 'topcities'];
     if (!validCategories.includes(category.toLowerCase())) {
       return res.status(400).json({ error: 'Invalid category' });
     }
 
-    // Get the specific collection based on category
     const collection = database.collection(category.toLowerCase());
 
-    // Delete the listing from the collection
     const result = await collection.deleteOne({ _id: new mongoose.Types.ObjectId(id) });
 
     if (result.deletedCount === 0) {
@@ -91,16 +121,13 @@ app.post('/api/add-listing/:category', async (req, res) => {
   const newListing = req.body;
 
   try {
-    // Get all collections in the database
     const collections = await database.listCollections().toArray();
     const collectionNames = collections.map(col => col.name);
 
-    // Check if the collection exists
     if (!collectionNames.includes(category.toLowerCase())) {
       return res.status(400).json({ error: `Collection ${category} does not exist` });
     }
 
-    // Get the collection and insert the new listing
     const collection = database.collection(category.toLowerCase());
     await collection.insertOne(newListing);
     console.log(`Inserted listing into ${category} collection`);
@@ -111,6 +138,69 @@ app.post('/api/add-listing/:category', async (req, res) => {
     res.status(500).json({ error: 'Failed to add listing' });
   }
 });
+app.get('/api/listings/host/:hostId', async (req, res) => {
+  const { hostId } = req.params;
+
+  try {
+    const collections = await database.listCollections().toArray();
+    let foundListings = [];
+
+    // Loop through all collections and search for the hostId in each collection
+    for (const collection of collections) {
+      const currentCollection = database.collection(collection.name);
+      const listings = await currentCollection.find({ addedBy: hostId }).toArray();
+      if (listings.length > 0) {
+        foundListings = [...foundListings, ...listings]; // Combine results from all collections
+      }
+    }
+
+    // If no listings were found
+    if (foundListings.length === 0) {
+      return res.status(404).json({ error: 'No listings found for this host' });
+    }
+
+    // Return all found listings
+    res.json(foundListings);
+  } catch (err) {
+    console.error('Error fetching listings:', err);  
+    res.status(500).send(err);
+  }
+});
+app.delete('/api/delete-listing/:listingId', async (req, res) => {
+  const { listingId } = req.params;
+
+  try {
+    // Validate listingId as a MongoDB ObjectId
+    if (!mongoose.Types.ObjectId.isValid(listingId)) {
+      return res.status(400).json({ error: 'Invalid listing ID' });
+    }
+
+    const collections = await database.listCollections().toArray();
+    let deleted = false;
+
+    for (const collection of collections) {
+      const currentCollection = database.collection(collection.name);
+      const result = await currentCollection.deleteOne({ _id: new mongoose.Types.ObjectId(listingId) });
+
+      if (result.deletedCount > 0) {
+        deleted = true;
+        break;
+      }
+    }
+
+    if (deleted) {
+      res.status(200).json({ message: 'Listing deleted successfully!' });
+    } else {
+      res.status(404).json({ error: 'Listing not found' });
+    }
+  } catch (err) {
+    console.error('Error deleting listing:', err);
+    res.status(500).json({ error: 'Error deleting listing' });
+  }
+});
+
+
+
 
 // Start the server
 const PORT = process.env.PORT || 5000;
