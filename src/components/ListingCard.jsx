@@ -6,7 +6,7 @@ import '../styles/ListingCard.css';
 
 const ListingCard = ({ activeCategory }) => {
     const [listings, setListings] = useState([]);
-    const [currentUserRole, setCurrentUserRole] = useState('user'); // default to 'user'
+    const [currentUserRole, setCurrentUserRole] = useState('guest'); // default to 'user'
     const [currentUserId, setCurrentUserId] = useState(null); // Store the current user's ID
     const [error, setError] = useState(null);
     const navigate = useNavigate();

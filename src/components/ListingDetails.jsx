@@ -10,7 +10,7 @@ const ListingDetails = ({ activeCategory }) => {
     const [error, setError] = useState(null); 
     const [loading, setLoading] = useState(true); 
     const navigate = useNavigate();
-    const [currentUserRole, setCurrentUserRole] = useState('user');
+    const [currentUserRole, setCurrentUserRole] = useState('guest');
 
     const checkRole = () => {
         axios.get('http://localhost:4000/current-user')
@@ -121,7 +121,7 @@ const ListingDetails = ({ activeCategory }) => {
             <p><span className="detail-label">Bathrooms:</span> {listing.bathrooms}</p>
             <p><span className="detail-label">Price:</span> {listing.price} {listing.status}</p>
             <p><span className="detail-label">Rating:</span> {listing.rating || "N/A"}</p>
-            {currentUserRole === 'user' && (
+            {currentUserRole === 'guest' && (
                 <button
                     className={`book-now-btn ${isBooked ? 'booked' : ''}`}
                     onClick={isBooked ? null : handleBookNow}

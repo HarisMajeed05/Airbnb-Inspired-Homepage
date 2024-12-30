@@ -133,7 +133,7 @@ const Navbar = () => {
                                         <li onClick={() => handleNavigate('/login')}>Login</li>
                                     </>
                                 )}
-                                {currentUserRole === 'user' && serverStatus && (
+                                {currentUserRole === 'guest' && serverStatus && (
                                     <li onClick={() => handleNavigate('/my-profile')}>My Profile</li>
                                 )}
                                 <li>Gift card</li>
