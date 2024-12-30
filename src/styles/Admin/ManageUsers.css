@@ -98,3 +98,51 @@
     justify-content: space-between;
     margin-bottom: 5px;
 }
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .manage-users {
+        padding: 15px;
+    }
+
+    .users-table th,
+    .users-table td {
+        padding: 8px 10px;
+        font-size: 12px;
+    }
+
+    .delete-btn,
+    .edit-btn,
+    .delete-booking-btn {
+        padding: 5px 8px;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .manage-users {
+        padding: 10px;
+    }
+
+    .users-table {
+        font-size: 12px;
+    }
+
+    .users-table th,
+    .users-table td {
+        padding: 5px;
+    }
+
+    .booking-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .delete-btn,
+    .edit-btn,
+    .delete-booking-btn {
+        width: 100%;
+        margin-bottom: 5px;
+        font-size: 11px;
+    }
+}

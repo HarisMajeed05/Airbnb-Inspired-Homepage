@@ -26,7 +26,7 @@
 }
 
 .login-input {
-    width: 100%;
+    width: 80%;
     padding: 0.75rem;
     margin: 0.5rem 0;
     border: 1px solid #ddd;
@@ -42,7 +42,7 @@
 }
 
 .login-button {
-    width: 100%;
+    width: 90%;
     padding: 0.75rem;
     background: linear-gradient(135deg, #74ebd5, #9face6);
     border: none;
@@ -61,4 +61,30 @@
 
 .login-button:active {
     transform: translateY(1px);
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .login-card {
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .login-card {
+        padding: 1rem;
+        width: 60%;
+    }
+
+    .login-card h2 {
+        font-size: 1.5rem;
+    }
+
+    .login-input {
+        font-size: 0.9rem;
+    }
+
+    .login-button {
+        font-size: 0.9rem;
+    }
 }
