@@ -39,7 +39,6 @@ const ManageListings = () => {
 
     const fetchListings = async (userId) => {
         try {
-            // Fetch all listings for the host (assuming the backend has an endpoint for this)
             const listingsResponse = await axios.get(`http://localhost:5000/api/listings/host/${userId}`);
             setListings(listingsResponse.data);
         } catch (error) {
@@ -48,16 +47,7 @@ const ManageListings = () => {
         }
     };
 
-    const fetchBookedUsers = async (hostId) => {
-        try {
-            // Fetch all users who booked a venue managed by the host
-            const response = await axios.get(`http://localhost:5000/api/booked-users/${hostId}`);
-            setBookedUsers(response.data);
-        } catch (error) {
-            console.error('Error fetching booked users:', error);
-            setError('Failed to fetch booked users.');
-        }
-    };
+
 
     const handleDeleteListing = async (listingId) => {
         try {
@@ -106,20 +96,7 @@ const ManageListings = () => {
                     <p>No listings found.</p>
                 )}
             </div>
-            <div className="booked-users">
-                <h3>Users Who Have Booked Your Venues</h3>
-                {bookedUsers.length > 0 ? (
-                    <ul>
-                        {bookedUsers.map((user) => (
-                            <li key={user._id}>
-                                {user.name} ({user.email})
-                            </li>
-                        ))}
-                    </ul>
-                ) : (
-                    <p>No bookings found.</p>
-                )}
-            </div>
+            
         </div>
     );
 };
