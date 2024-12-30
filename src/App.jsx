@@ -382,34 +382,30 @@ import Categories from "./components/Categories";
 import ListingCard from "./components/ListingCard";
 import Footer from "./components/Footer";
 import ListingDetails from "./components/ListingDetails";
-import Login from "./components/Login";
-import Signup from "./components/Signup";
-import Logout from "./components/Logout";
-import ManageUsers from "./components/ManageUsers";
-import AddListing from "./components/AddListing";
-import MyProfile from "./components/MyProfile";
+import Login from "./components/Auth/Login";
+import Signup from "./components/Auth/Signup";
+import Logout from "./components/Auth/Logout";
+import ManageUsers from "./components/Admin/ManageUsers";
+import AddListing from "./components/Admin/AddListing";
+import MyProfile from "./components/User/MyProfile";
 import "./App.css";
 
 function App() {
-  const [activeCategory, setActiveCategory] = useState("Icons"); // Default to 'Icons'
+  const [activeCategory, setActiveCategory] = useState("Icons");
   const navigate = useNavigate();
   const location = useLocation(); // Get the current route
 
-  // Navigate to the main page of the active category
   const handleCategoryChange = (newCategory) => {
     setActiveCategory(newCategory);
-    navigate(`/`); // Redirect to the main page
+    navigate(`/`);
   };
 
-  // List of routes where Categories should be hidden
   const hideCategoriesOnRoutes = ["/login", "/signup", "/logout", "/my-profile", "/manage-users", "/admin/add-listing"];
 
   return (
     <div className="App">
       <Navbar />
       <SearchBar />
-      
-      {/* Conditionally render Categories */}
       {!hideCategoriesOnRoutes.includes(location.pathname) && (
         <Categories
           activeCategory={activeCategory}
@@ -447,78 +443,3 @@ function App() {
 }
 
 export default App;
-
-
-// import { Routes, Route, useNavigate } from "react-router-dom";
-
-// function App() {
-//   const [activeCategory, setActiveCategory] = useState("Icons"); // Default to 'Icons'
-//   const navigate = useNavigate();
-
-//   // Handle category change and navigation
-//   const handleCategoryChange = (newCategory) => {
-//     setActiveCategory(newCategory);
-//     navigate(`/category/${newCategory.toLowerCase()}`); // Navigate to the new category
-//   };
-
-//   return (
-//     <div className="App">
-//       <Navbar />
-//       <SearchBar />
-//       <Categories
-//         activeCategory={activeCategory}
-//         setActiveCategory={handleCategoryChange} // Pass handler for category changes
-//       />
-
-//       <div className="listing-sect">
-//         <Routes>
-//           {/* Home route */}
-//           <Route
-//             path="/"
-//             element={<ListingCard activeCategory={activeCategory} />}
-//           />
-
-//           {/* Dynamic route for category listings */}
-//           <Route
-//             path="/category/:category"
-//             element={<ListingCard activeCategory={activeCategory} />}
-//           />
-
-//           {/* Dynamic route for listing details */}
-//           <Route
-//             path="/category/:category/:id"
-//             element={<ListingDetails activeCategory={activeCategory} />}
-//           />
-
-//           <Route path="/signup" element={<Signup />} />
-//           <Route path="/login" element={<Login />} />
-//           <Route path="/logout" element={<Logout />} />
-//           <Route path="/manage-users" element={<ManageUsers />} />
-//         </Routes>
-//       </div>
-
-//       <Footer />
-//     </div>
-//   );
-// }
-
-// export default App;
-
-
-// function App() {
-//   const [activeCategory, setActiveCategory] = useState('Icons'); // Default to 'Icons'
-
-//   return (
-//     <div className="App">
-//       <Navbar />
-//       <SearchBar />
-//       <Categories activeCategory={activeCategory} setActiveCategory={setActiveCategory} />
-//       <div className="listing-sect">
-//         <ListingCard activeCategory={activeCategory} />
-//       </div>
-//       <Footer />
-//     </div>
-//   );
-// }
-
-// export default App;

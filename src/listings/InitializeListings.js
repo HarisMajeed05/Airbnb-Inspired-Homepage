@@ -1,7 +1,7 @@
 import { MongoClient } from 'mongodb';
 
-const uri = 'mongodb://127.0.0.1:27017'; // Update with your MongoDB URI
-const dbName = 'airbnbListings'; // Replace with your database name
+const uri = 'mongodb://127.0.0.1:27017';
+const dbName = 'airbnbListings';
 const client = new MongoClient(uri);
 
 const listings = {
@@ -217,11 +217,9 @@ async function run() {
     const collectionIcons = db.collection('icons');
     const collectionTopCities = db.collection('topcities');
 
-    // Insert Icons data
     await collectionIcons.insertMany(listings.Icons);
     console.log('Inserted Icons data');
 
-    // Insert Top cities data
     await collectionTopCities.insertMany(listings['Top cities']);
     console.log('Inserted Top Cities data');
   } catch (error) {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import '../styles/MyProfile.css'; // Import the CSS file
+import '../styles/User/MyProfile.css'; // Import the CSS file
 
 const MyProfile = () => {
   const [userDetails, setUserDetails] = useState(null);
@@ -110,9 +110,9 @@ const MyProfile = () => {
               ))}
             </ul>
           )}
-          <button className="edit-button" onClick={() => setEditing(true)}>
+          {/* <button className="edit-button" onClick={() => setEditing(true)}>
             Edit Profile
-          </button>
+          </button> */}
         </>
       ) : (
         <form onSubmit={handleSubmit} className="edit-form">

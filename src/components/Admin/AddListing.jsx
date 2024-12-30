@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import '../styles/AddListing.css'; // Add custom styles here if needed
+import '../styles/Admin/AddListing.css'; // Add custom styles here if needed
 
 const AddListing = ({ activeCategory }) => {
     const navigate = useNavigate();

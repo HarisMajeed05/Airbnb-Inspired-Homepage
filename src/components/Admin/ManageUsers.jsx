@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import '../styles/ManageUsers.css'; // Optional: Include custom styling
+import '../styles/Admin/ManageUsers.css'; // Optional: Include custom styling
 
 const ManageUsers = () => {
     const [users, setUsers] = useState([]);

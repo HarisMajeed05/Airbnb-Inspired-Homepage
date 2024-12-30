@@ -9,47 +9,39 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const app = express();
-const PORT = 4000;
+const PORT = 7000;
 
-// Global variable to store the current user's ID and timeout
 let currentUserId = null;
 let currentUserRole = 'user';
-let sessionTimeout = null; // Timeout reference
+let sessionTimeout = null;
 
-// CORS configuration with specific origin
 const corsOptions = {
-    origin: 'http://localhost:5173',  // Allow only the frontend origin
+    origin: 'http://localhost:5173',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    credentials: true,  // Allow cookies and authentication credentials
+    credentials: true,
 };
 
-// Apply CORS middleware
-app.use(cors(corsOptions)); // Use the CORS middleware with the options
+app.use(cors(corsOptions));
 
-// Middleware
 app.use(bodyParser.json());
-// MongoDB Connection
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log("Connected to MongoDB"))
     .catch((err) => console.error("Error connecting to MongoDB:", err));
 
-// User Schema and Model
 const userSchema = new mongoose.Schema({
     username: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    role: { type: String, default: "user" },// Default role is 'user'
+    role: { type: String, default: "user" },
     bookedVenues: [{ category: String, venueId: String }]
 });
 
 const User = mongoose.model("User", userSchema);
 
-// Predefined Admin Credentials
 const predefinedAdmins = [
     { username: "admin1", password: "123" },
     { username: "admin2", password: "456" }
 ];
 
-// Initialize Predefined Admins in Database
 (async () => {
     for (const admin of predefinedAdmins) {
         const existingAdmin = await User.findOne({ username: admin.username });
@@ -93,19 +85,17 @@ app.post("/api/auth/login", async (req, res) => {
             return res.status(401).json({ error: "Invalid credentials" });
         }
 
-        // Set the global user ID and reset the session timeout
         currentUserId = user._id;
-        currentUserRole = user.role; // Update the currentUserRole based on the user's role
+        currentUserRole = user.role;
         console.log("User logged in:", user._id);
         console.log("User logged in:", user.role);
 
-        if (sessionTimeout) clearTimeout(sessionTimeout); // Clear previous timeout if any
+        if (sessionTimeout) clearTimeout(sessionTimeout);
 
-        // Set a new timeout to clear user ID after 30 minutes (1800000 ms)
         sessionTimeout = setTimeout(() => {
             console.log("Session expired. Clearing user ID.");
             currentUserId = null;
-            currentUserRole = 'user'; // Reset to default user role
+            currentUserRole = 'user';
         }, 1800000);
 
         const token = jwt.sign(
@@ -118,7 +108,7 @@ app.post("/api/auth/login", async (req, res) => {
             message: "Login successful",
             token,
             role: user.role,
-            redirectPath: `/` // Redirect to user-specific page
+            redirectPath: `/`
         });
     } catch (err) {
         console.error(`Error logging in user: ${username}`, err);
@@ -129,7 +119,6 @@ app.post("/api/auth/login", async (req, res) => {
 
 // Logout
 app.post("/api/auth/logout", (req, res) => {
-    // Clear the global user ID and timeout
     console.log("User logged out:", currentUserId);
     currentUserId = null;
     if (sessionTimeout) clearTimeout(sessionTimeout);
@@ -137,8 +126,7 @@ app.post("/api/auth/logout", (req, res) => {
 });
 
 
-// Route to handle booking a venue
-// Route to handle booking a venue
+// Handle booking a venue
 app.post("/api/bookings/:category/:id", async (req, res) => {
     const { category, id } = req.params;
 
@@ -147,7 +135,6 @@ app.post("/api/bookings/:category/:id", async (req, res) => {
     }
 
     try {
-        // Check if the venue is already booked by any user
         const bookedByUser = await User.findOne({
             "bookedVenues.category": category,
             "bookedVenues.venueId": id,
@@ -157,7 +144,6 @@ app.post("/api/bookings/:category/:id", async (req, res) => {
             return res.status(400).json({ error: "Venue already booked by another user" });
         }
 
-        // Add the new venue to the current user's bookedVenues
         const user = await User.findById(currentUserId);
         if (!user) {
             return res.status(404).json({ error: "User not found" });
@@ -172,12 +158,11 @@ app.post("/api/bookings/:category/:id", async (req, res) => {
         res.status(500).json({ error: "Error booking venue" });
     }
 });
-// Check if a venue is already booked
+
 app.get("/api/:category/:id/is-booked", async (req, res) => {
     const { category, id } = req.params;
 
     try {
-        // Find any user who has booked this venue
         const bookedByUser = await User.findOne({
             "bookedVenues.category": category,
             "bookedVenues.venueId": id,
@@ -193,7 +178,7 @@ app.get("/api/:category/:id/is-booked", async (req, res) => {
         res.status(500).json({ error: "Error checking booking status" });
     }
 });
-// Get user role by userId
+
 app.get("/api/user-role/:userId", async (req, res) => {
     const { userId } = req.params;
 
@@ -219,9 +204,9 @@ app.get("/current-user", (req, res) => {
 });
 app.get('/checkStatus', (req, res) => {
     if (currentUserId) {
-        res.json(true); // If the user ID is not null, return true
+        res.json(true);
     } else {
-        res.json(false); // If the user ID is null, return false
+        res.json(false);
     }
 });
 app.get('/users', async (req, res) => {
@@ -241,12 +226,11 @@ app.delete('/api/users/:id', async (req, res) => {
         res.status(500).send('Error deleting user');
     }
 });
-// Route to delete a specific booking for a user
+// Delete a specific booking
 app.delete('/users/:userId/bookings/:bookingId', async (req, res) => {
     const { userId, bookingId } = req.params;
 
     try {
-        // Find the user by ID and remove the booking from the bookedVenues array
         const user = await User.findById(userId);
         if (!user) {
             return res.status(404).json({ error: 'User not found' });
@@ -266,7 +250,6 @@ app.delete('/users/:userId/bookings/:bookingId', async (req, res) => {
         res.status(500).json({ error: 'Error deleting booking' });
     }
 });
-// Fetch the details of the current logged-in user
 app.get('/api/user/user-details', async (req, res) => {
     if (!currentUserId) {
         return res.status(401).json({ error: "No user logged in" });
@@ -289,7 +272,7 @@ app.get('/api/user/user-details', async (req, res) => {
     }
 });
 const authenticate = (req, res, next) => {
-    const token = req.headers['authorization']?.split(' ')[1]; // Extract the token
+    const token = req.headers['authorization']?.split(' ')[1];
   
     if (!token) {
       return res.status(401).json({ message: 'No token provided' });
@@ -299,15 +282,14 @@ const authenticate = (req, res, next) => {
       if (err) {
         return res.status(401).json({ message: 'Unauthorized' });
       }
-      req.user = decoded; // Store the decoded user information in request object
-      next(); // Proceed to the next middleware or route handler
+      req.user = decoded;
+      next();
     });
   };
   
-  // Protect the route
 
 app.put('/api/user/update/user-details', authenticate, async (req, res) => {
-    const userId = req.user.id; // Get user ID from JWT payload
+    const userId = req.user.id;
     console.log(userId);
     const { username, password } = req.body;
 console.log(username);
@@ -337,5 +319,4 @@ console.log(password);
     }
 });
 
-// Start the server
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
